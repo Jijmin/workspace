@@ -196,6 +196,7 @@ indent_style = tab
 tab_width = 4
 ```
 
+## 后台管理页面级功能
 ### 列表静态页面设计
 1. 后台几乎所有的页面都有一个公共的头部和左侧菜单栏
 2. 只有中间的内容不一样，我们可以在改变的地方放置一个占位符
@@ -548,4 +549,409 @@ req.models.videoinfo.get(vid,(err,data)=>{
     data.vimg=req.body.vimg;
     data.save();
 });
+```
+3. 在form表单中的路由规则写错了，直接复制过来的
+```
+<form action="/admin/edit/{{vid}}" method="post" class="form-horizontal">
+```
+
+### 删除模块
+1. 我们一样也可以采用上面的模式来，但是为更好的用户体验
+2. 应该采用ajax来实现页面无刷新直接删除
+3. 我们在写代码的时候最好少嵌套
+4. jQuery中的ajax
+- $.get(url,参数对象，成功的回调函数，服务器响应回来的数据格式)
+- $.post(url,参数对象，成功的回调函数，服务器响应回来的数据格式)
+- $.getJSON(url,参数对象，成功的回调函数)
+- $.ajax()最全的
+5. 我们需要根据后端返回的格式来使用JSON或XML，我们这里传回来的参数是JSON
+6. 我们不需要对服务器传递参数，因为我们已经通过：形式来传参，因此data是null
+```
+var url='/admin/delete/{{vid}}';
+var data=null;
+$.getJSON(url,data,function(jsObj){
+    //...
+});
+```
+7. 在这个ajax中，服务器响应回来的json对象会转换成一个JS对象
+8. 这种删除在服务器可能会报错，为了更好的容错性，我们需要将错误响应到回调函数中
+9. 在回调函数中我们需要根据vid的值删除数据
+10. 然后将处理的结果响应回去，我们调用end方法的时候，都是将消息返回给浏览器
+11. 但是中间是通过我们的异步对象xhr中的onreadystatechange
+12. onreadystatechange这个回调函数的方法体其实是这个$.getJSON()中的回调函数
+13. 这个函数就会将你返回的的数据转换成一个JSON对象
+14. 如果你的数据删除错误，那么应该返回一个错误信息，成功就有成功的处理
+15. 在回调函数中一定要判断服务器响应给我们的数据到底是成功还是失败的
+16. 那么如果我们返回的JS对象中有一个状态，告诉我们是成功还是失败，以及还要见错误信息提示出来
+```
+function del(vid){
+  if(!confirm('您是否删除这条数据')){
+    return;
+  }
+  var url='/admin/delete/{{vid}}';
+  var data=null;
+  $.getJSON(url,data,function(jsObj){
+    if(jsobj.status==1){
+      alert(jsObj.message);
+    }else{//成功
+      alert(jsObj.message);
+      // window.location.reload();//会出现页面翻白
+      window.location=window.location;
+    }
+  });
+}
+```
+17. 因为已经商量好的响应回去的是JSON数据{"status":1,"message":"提示语"}
+18. 
+```
+exports.getdelete=(req,res)=>{
+    let vid=req.params.vid;
+    //返回的是一个JSON对象
+    let resObj={status:0,message:'删除成功'};
+    //一般在程序开发过程中，我们采用这种方式来判断是否是成功
+    let success=0;
+    let fail=1;
+    req.models.videoinfo.get(vid,(err,data)=>{
+        if(err){
+                resObj.status=fail;
+                resObj.message=err.message;
+                res.end(JSON.stringify(resObj));
+                return;
+            }
+        data.remove((err)=>{
+            if(err){
+                resObj.status=fail;
+                resObj.message=err.message;
+                res.end(JSON.stringify(resObj));
+                return;
+            }
+            res.end(JSON.stringify(resObj));
+        });
+    });
+}
+```
+
+### get()和find()区别
+1. get()返回的是唯一的一条数据
+2. find()返回的是一个数组
+
+### 关于API的文档如何去看
+1. 写静态(里面的数据是通过ajax去访问后台程序员开发出来的api接口进行操作的)
+2. 一般会得到一些由后台人员书写的API接口规范
+3. 我们需要对页面进行怎么样的操作，一般都是看什么路由规则
+4. 商定好请求方式是get还是post，传递了哪些参数，返回的格式以及具体的格式样例
+
+### 登录页面思路
+1. 确定登录的路由规则 
+2. 通过get请求拿到我们的登录页面
+3. 当用户填写完数据之后点击提交按钮，会发送一个我们的post请求
+4. 验证码是图片，也要向服务器发送一次请求
+5. 我们要将用户名密码验证码发送给服务器
+6. 服务器获取到浏览器发送过来的用户填写的验证码字符串和服务器生成的验证码字符串比较
+7. 验证码的作用就是防止暴力破解
+8. 我们先在服务器创建好一个验证码字符串，并保存起来
+9. 将创建好的验证码以图片的形式显示在浏览器
+10. 服务器拿到浏览器发送过来的验证码和自己本身生成的验证码进行比较
+11. 我们要先是登录才能进入我们的页面中访问我们的功能
+12. 我们使用express-session保存我们的验证码
+13. 每个人访问我们的网站，验证码是不一样的
+14. 浏览器在发送请求的时候要将自己的浏览器的id一起发送过去
+15. 浏览器发送请求，服务器会通过set-cooike随机字符串产生一个浏览器的身份ID
+16. 当浏览器获取到set-cookie指令以后，就会将身份ID保存到浏览器的内存或者磁盘上
+17. 当下一次再去发送这个网站的其他页面请求的时候，就会同时带上这个身份ID给服务器
+
+### session和cooike
+- session：是一种服务端的技术，一般是结合cookie来进行服务器的状态维持，本质上是在服务器的内存中开辟了一块空间
+- cookie是客户端的一种能够存储少量(4k)文本的技术，类似于sessionStorage和localStorge这种技术
+- 一般就是用在登录以后的状态的维持中的浏览器身份id的保存(express-session)就是用了它
+
+### 登录页面的渲染
+1. 登录页面的bootstrap实现
+2. 我们每次点击图片的时候就会进行一次请求
+3. 要将图片的src设置为跳转的路由
+```
+$('#vcodeimg').click=function(){
+    //在IE浏览器中不能实现刷新
+    // var url='/account/vcode';
+    var url='/account/vcode'+Math.random();
+    //这样页面每次刷新的时候的url都不一样，就可以刷新
+    // this.src=url;//原生的
+    $(this).attr('src',url);
+}
+```
+4. 设置路由规则
+```
+route.get('/account/login',accCtrl.getlogin);
+route.post('/account/login',accCtrl.postlogin);
+route.get('/account/vcode',accCtrl.getvcode);
+```
+5. 第一次发送请求渲染页面
+```
+exports.getlogin = (req,res)=>{
+    xtpl.renderFile(path.join(__dirname,'../view/login.html'),{},(err,html)=>{
+        if(err)
+        {
+            res.end(err.message); 
+            console.log(err); 
+            return; 
+        }
+        res.end(html);
+    });
+}
+```
+
+### 验证码实现
+1. 产生一个验证码字符串
+```
+let vcode=parseInt(Math.random()*9000+1000);
+```
+2. 将验证码字符串变成一个图片响应回去
+```
+const captchapng = require('captchapng');
+var p = new captchapng(80,30,vcode);
+p.color(0, 0, 0, 0);
+p.color(80, 80, 80, 255);
+var img = p.getBase64();
+var imgbase64 = new Buffer(img,'base64');
+res.writeHead(200, {
+  'Content-Type': 'image/png'
+});
+res.end(imgbase64);
+```
+3. 当浏览器第一次请求网页的时候就将浏览器向浏览器写一个身份标识到他的cookie中
+```
+const session=require('express-session');
+app.use(session({
+  secret: 'keyboard cat',//加密的秘钥
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+```
+4. 将验证码字符串保存在session中，就是将验证码存在服务器
+```
+req.session.vcode=vcode;
+```
+5. 点击图片不能刷新问题的解决
+```
+$('#vcodeimg').click(function(){//jQuery不熟悉，语法上的错误
+  var url='/account/vcode?vid='+Math.random();
+  $(this).attr('src',url);
+});
+```
+
+### 登录post验证过程
+1. 获取浏览器发送过来的请求报文体中的数据
+2. 获取服务器中属于这个浏览器的验证码字符串与浏览器提交过来的验证码对比
+3. 验证用户名和密码的正确性
+4. 跳转到/admin/list
+```
+exports.postlogin = (req,res)=>{
+    let uname=req.body.uname;
+    let upwd=req.body.upwd;
+    let vcode=req.body.vcode;
+    let vodeFormSession=req.session.vcode;
+    if(vodeFormSession!=vcode){
+      res.end('<script>alert("验证码输入错误");</script>');
+      return;
+    }
+    req.models.user.find({uname:uname,upwd:upwd},{},(err,datas)=>{
+      if(err){
+          res.end('<script>alert("用户名和密码错误");</script>');
+          return;
+      }
+      res.end('<script>alert("登录成功");window.location="/admin/list"</  script>');
+    });
+}
+```
+5. 验证码输入总是错误
+在app.js中初始化数据库模型的时候，将models上的属性写错，写成userinfo，这边用的是user
+6. 我们登录时要将我们的用户名记录，显示在list页面中
+7. 在跳转之前将我们的验证码存储在req.session中
+```
+req.session.uname=uname;
+```
+8. 在模板页面中显示我们的用户
+```
+<p class="navbar-text navbar-right">欢迎【{{loginname}}】登陆<a href="#" class="navbar-link">退出</a></p>
+```
+9. 我们加载list页面时将用户也一起输出
+```
+let obj={list:datas,loginname:req.session.uname};
+```
+
+### 统一登录之后才能进入后台
+1. 进入到我们的admin中所有的路由规则都需要进行验证
+2. 只有我们是登录成功的才能进行访问
+3. 只要我们session中有值，那么说明我们登录成功
+```
+app.all('/admin/*',(req,res,next)=>{
+    if(req.session.uname==null){
+        res.end('<script>alert("用户未登录");window.location="/account/login";</script>');
+    }
+    next();
+});
+```
+
+### 退出功能的实现
+1. 退出是一个超链接，超链接可以跳转，发送请求
+```
+<a href="/account/logout" class="navbar-link">退出</a>
+```
+2. 我们需要给退出提供一个路由规则
+```
+route.get('/account/logout',accCtrl.getlogout);
+```
+3. 将req.session.uname这个登录标识的值设置为null
+```
+req.session.uname=null;
+```
+4. 跳转到登录页面
+```
+res.end('<script>alert("退出成功");window.location="/account/login"</script>');
+```
+
+### 用户登录不成功时优化
+```
+res.end('<script>alert("验证码输入错误");window.location="/account/login"</script>');
+res.end('<script>alert("用户名和密码错误");window.location="/account/login"</script>');
+```
+
+### 密码的加密(md5)
+- 在数据库中存在的是明文的话，将数据库破解后，就会很危险，要将数据库的密码存储为密文。
+- 通常加密方式
+    + SHA1
+    + SHA128
+    + SHA256
+    + MD5
+- 对称加密：可逆
+- 非对称加密
+    + 公钥负责加密，通常在互联网上流通的
+    + 私钥负责解密，一般是存储在服务器上
+    + 应用：https，通过加密以后将数据在互联网上流通的
+- 行业规则：MD5加密的密码不可逆
+```
+const crypto=require('crypto');
+const secret='adcdefg';
+const hash=crypto.createHmac('md5',secret)
+                 .update('I love cupcakes')
+                 .digest('hex');
+```
+1. 在项目中设置一个工具类的文件夹
+2. 工具类的文件夹中新建一个md5entry.js专门负责我们的加密
+3. 在我们nodejs的官网上面我们可以找到一个加密模块crypto
+4. 将MD5加密过程封装成一个模块，并将模块暴露出去
+```
+'use strict';
+const crypto=require('crypto');
+const secret='adcdefg';
+module.exports=function(str){
+    return crypto.createHmac('md5',secret)
+                 .update(str)
+                 .digest('hex');
+};
+
+```
+5. 在我们登录提交时将密码加密
+```
+upwd.=require('../tools/md5entry.js')(upwd);
+```
+
+### 分页功能
+1. 查询出真正属于这页的数据
+- offset：跳过多少条数据
+- limit：取得多少条数据
+2. 确定好这个分页的总页数
+- 分页的总页数=表中数据的总条数/页容量
+- orm.models.videoinfi.count();
+3. 页面和页容量都要传递服务器
+4. 获取到数据表中的数据总条数
+```
+req.models.videoinfo.count({},(err,count)=>{
+    //...
+}
+```
+5. 计算出总页数，产生一个数组
+```
+let pages=[];
+for (var i = 1; i < count; i++) {
+    pages.push(i);
+}
+//在数据库中查找后传给我们的浏览器
+let obj={list:datas,loginname:req.session.uname,pages:pages};
+```
+6. 因为是动态生成，我们需要更改视图 
+```
+{{#each(pages)}}
+    <li><a href="/admin/list?pageindex={{this}}&pagesize=1">{{this}}</a></li>
+{{/each}}
+```
+7. 动态计算出跳过的总条数
+```
+let pageIndex=parseInt(req.query.pageindex);
+let pageSize=parseInt(req.query.pagesize);
+let skipCount=(pageIndex-1)*pageSize;
+req.models.videoinfo.find({},{offset:skipCount,limit:pageSize},(err,datas)=>{
+    //...
+}
+```
+8. 让刚开始进来list的时候有一个默认值
+```
+let pageIndex=parseInt(req.query.pageindex||1);
+let pageSize=parseInt(req.query.pagesize||1);
+```
+9. 一般的情况下一页显示10条数据
+```
+for (var i = 1; i < Math.ceil(count/10)+1; i++) {
+    pages.push(i);
+}   
+```
+
+### 查找
+1. 模糊查询
+2. 在计算总条数的时候有条件
+```
+req.models.videoinfo.count({vtitle:orm.like('%node%')},(err,count)=>{
+    //...
+}
+```
+3. 将数据动态化，点查询的时候提交
+4. 也有分页
+5. 给查询绑定点击事件
+```
+<input type="button" class="btn btn-success" onclick="search()" value="查询">
+```
+6. 获取文本框的值
+```
+var searchValue=$('#title').val();
+```
+7. 发送请求到/admin/list中
+```
+window.location='/admin/list?searchValue='+searchValue;
+```
+8. 在服务器获取到我们输入框的值
+```
+let searchValue=req.query.searchValue;
+```
+9. 更改我们的模板
+```
+{vtitle:orm.like('%'+searchValue+'%')}
+```
+10. 我们用到了我们的orm包，将orm设置为全局
+```
+global.orm=orm;
+```
+11. 我们应该将我们输入的查询信息存储起来
+12. 在我们的url中有我们的查询信息
+13. 在我们的input标签中我们需要添加一个value值
+```
+<input type="text" class="form-control" placeholder="请输入视频名称" aria-describedby="basic-addon1" id="title" value="{{searchValue}}">
+```
+14. 将来searchValue可以通过渲染回去
+```
+let obj={list:datas,loginname:req.session.uname,pages:pages,searchValue:searchValue};
+```
+15. 但是有一个小问题就是我们的放在页码上的时候我们会发现并没有searchValue值，我们需要对代码进行修改
+```
+<li><a href="/admin/list?pageindex={{this}}&pagesize=10?searchValue={{searchValue}}">{{this}}</a></li>
 ```
