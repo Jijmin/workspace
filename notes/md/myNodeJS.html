@@ -1,0 +1,1970 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABMAAAABwAAAAca8vGTk9TLzIAAAFMAAAARAAAAFZG1VHVY21hcAAAAZAAAAA+AAABQgAP9AdjdnQgAAAB0AAAAAQAAAAEACICiGdhc3AAAAHUAAAACAAAAAj//wADZ2x5ZgAAAdwAAADRAAABEKyikaNoZWFkAAACsAAAAC0AAAA2AtXoA2hoZWEAAALgAAAAHAAAACQHngNFaG10eAAAAvwAAAAQAAAAEAwAACJsb2NhAAADDAAAAAoAAAAKALIAVG1heHAAAAMYAAAAHwAAACABEAB2bmFtZQAAAzgAAALBAAAFu3I9x/Nwb3N0AAAF/AAAAB0AAAAvaoFvbwAAAAEAAAAAzBdyYwAAAADP2IQvAAAAAM/bz7t4nGNgZGFgnMDAysDB1Ml0hoGBoR9CM75mMGLkYGBgYmBlZsAKAtJcUxgcPsR8iGF2+O/AEMPsznAYKMwIkgMA5REMOXicY2BgYGaAYBkGRgYQsAHyGMF8FgYFIM0ChED+h5j//yEk/3KoSgZGNgYYk4GRCUgwMaACRoZhDwCs7QgGAAAAIgKIAAAAAf//AAJ4nHWMMQrCQBBF/0zWrCCIKUQsTDCL2EXMohYGSSmorScInsRGL2DOYJe0Ntp7BK+gJ1BxF1stZvjz/v8DRghQzEc4kIgKwiAppcA9LtzKLSkdNhKFY3HF4lK69ExKslx7Xa+vPRVS43G98vG1DnkDMIBUgFN0MDXflU8tbaZOUkXUH0+U27RoRpOIyCKjbMCVejwypzJJG4jIwb43rfl6wbwanocrJm9XFYfskuVC5K/TPyczNU7b84CXcbxks1Un6H6tLH9vf2LRnn8Ax7A5WQAAAHicY2BkYGAA4teL1+yI57f5ysDNwgAC529f0kOmWRiYVgEpDgYmEA8AUzEKsQAAAHicY2BkYGB2+O/AEMPCAAJAkpEBFbAAADgKAe0EAAAiAAAAAAQAAAAEAAAAAAAAKgAqACoAiAAAeJxjYGRgYGBhsGFgYgABEMkFhAwM/xn0QAIAD6YBhwB4nI1Ty07cMBS9QwKlQapQW3VXySvEqDCZGbGaHULiIQ1FKgjWMxknMfLEke2A+IJu+wntrt/QbVf9gG75jK577Lg8K1qQPCfnnnt8fX1NRC/pmjrk/zprC+8D7tBy9DHgBXoWfQ44Av8t4Bj4Z8CLtBL9CniJluPXASf0Lm4CXqFX8Q84dOLnMB17N4c7tBo1AS/Qi+hTwBH4rwHHwN8DXqQ30XXAS7QaLwSc0Gn8NuAVWou/gFmnjLrEaEh9GmDdDGgL3B4JsrRPDU2hTOiMSuJUIdKQQayiAth69r6akSSFqIJuA19TrzCIaY8sIoxyrNIrL//pw7A2iMygkX5vDj+G+kuoLdX4GlGK/8Lnlz6/h9MpmoO9rafrz7ILXEHHaAx95s9lsI7AHNMBWEZHULnfAXwG9/ZqdzLI08iuwRloXE8kfhXYAvE23+23DU3t626rbs8/8adv+9DWknsHp3E17oCf+Z48rvEQNZ78paYM38qfk3v/u3l3u3GXN2Dmvmvpf1Srwk3pB/VSsp512bA/GG5i2WJ7wu430yQ5K3nFGiOqgtmSB5pJVSizwaacmUZzZhXLlZTq8qGGFY2YcSkqbth6aW1tRmlaCFs2016m5qn36SbJrqosG4uMV4aP2PHBmB3tjtmgN2izkGQyLWprekbIntJFing32a5rKWCN/SdSoga45EJykyQ7asZvHQ8PTm6cslIpwyeyjbVltNikc2HTR7YKh9LBl9DADC0U/jLcBZDKrMhUBfQBvXRzLtFtjU9eNHKin0x5InTqb8lNpfKv1s1xHzTXRqgKzek/mb7nB8RZTCDhGEX3kK/8Q75AmUM/eLkfA+0Hi908Kx4eNsMgudg5GLdRD7a84npi+YxNr5i5KIbW5izXas7cHXIMAau1OueZhfj+cOcP3P8MNIWLyYOBuxL6DRylJ4cAAAB4nGNgYoAALjDJyIAOWMCiTIxMLDmZedkABtIBygAAAA==) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>myNodeJS</title></head><body><article class="markdown-body"><h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>视频播放项目</h1>
+<h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>项目文件夹搭建</h2>
+<h3 id="project"><a name="user-content-project" href="#project" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>project文件夹</h3>
+<ol>
+<li>新建一个src文件夹，用来存放我们的测试的文件</li>
+<li>新建一个dist文件夹，用来存放我们处理后上线的文件</li>
+<li>建立一个index.js文件是我们的整个项目的入口点</li>
+<li>因为我们安装了node环境，用shell自动生成一个配置文件</li>
+<li><code>npm init -y</code>如果当前文件夹有中文，只能手动配置</li>
+</ol>
+<h3 id="packagejson"><a name="user-content-packagejson" href="#packagejson" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>package.json文件设置</h3>
+<ol>
+<li>package.json中的scripts属性是配置文件中的配置文件</li>
+<li>对scripts进行配置，设置两个key，到时候只要执行<code>npm run 配置的键</code>就可以运行</li>
+<li>&ldquo;dev&rdquo;：只要执行npm run dev 就会去执行src下面的代码</li>
+<li>&ldquo;dist&rdquo;：只要执行npm run dist 就会去执行dist下面的代码</li>
+<li>dist文件夹下的东西是对src的压缩和混淆，其他基本一样，相当于拷贝一份</li>
+<li>所以我们创建的服务器的端口是要不一样的，一般测试的是单数，上线的是双数端口<br />
+<pre><code>&quot;dev&quot;:&quot; cross-env PORT=8876 NODE_EVN=dev nodemon ./index.js&quot; ,
+//在shell中可以直接运行npm run dev就会执行这里面的代码
+//cross-env是一个可以跨平台设置的环境变量的包，需要全局安装
+//nodemon包是可以自启动服务器，也是需要全局安装
+&quot;dist&quot;:&quot; cross-env PORT=8878 NODE_EVN=dist nodemon ./index.js&quot; 
+//在dist中我们将端口号设置为双数
+</code></pre></li>
+<li>我们需要在全局环境下安装cross-env和nodemon包</li>
+</ol>
+<h3 id="indexjs"><a name="user-content-indexjs" href="#indexjs" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>index.js</h3>
+<ol>
+<li>index.js的职责是这个项目的统一入口</li>
+<li>获取通过环境变量设置到NODE_EVN的值<br />
+<pre><code>&quot;use strict&quot;;
+let env=process.env.NODE_EVN.trim();
+</code></pre></li>
+<li>判断当前执行的是开发环境还是工厂环境<br />
+<pre><code>if(env=='dev'){
+    //开发环境
+    require('./src/app.js');
+}else{
+    //生产环境
+    require('./dist/app.js');
+}
+</code></pre></li>
+</ol>
+<h3 id="src"><a name="user-content-src" href="#src" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>src文件夹</h3>
+<ol>
+<li>app.js的职责是搭建开发环境的服务器</li>
+<li>我们是用express来搭建框架的，因此我们需要安装express<code>npm i express --save</code></li>
+<li>导入express<code>let express=require('express');</code></li>
+<li>实例化一个application</li>
+<li>初始化orm模型数据，orm是一个将数据库中的数据取出，转换成一个数组，里面是一个个对象，[{&lsquo;uid&rsquo;:&lsquo;1&rsquo;,&rsquo;uname&rsquo;:&rsquo;admin&rsquo;:&rsquo;upwd&rsquo;:&lsquo;123456&rsquo;},{......}]<br />
+<pre><code>const orm=require('orm');
+app.use(orm.express('mysql://root:root@127.0.0.1:3306/nodedb',{
+    define:function(db,models,next){
+        models.userinfo=db.define('userinfo',{
+            uid:{type:'serial',key:true},
+            uname:String,
+            upwd:String,
+            ustatus:Number
+        });
+        models.videoinfo = db.define('videinfo',{
+            vid:{type:'serial',key:true},
+            vtitle:String,
+            vsortno:Number,
+            vvideid:String,
+            vsummary:String,
+            vremark:String,
+            vimg:String
+        });
+        next();
+    }
+}));
+</code></pre></li>
+<li>将网站的statics这个文件夹当做系统的静态资源文件夹<br />
+<pre><code>let phyPath=__dirname+'/statics';
+app.use(express.static(phyPath));
+</code></pre></li>
+<li>我们需要在src目录下设置静态资源存放区域</li>
+<li>设定路由规则<br />
+<pre><code>const accountRoute=require('./routes/accountRoute.js');
+app.use('./account',accountRoute);
+</code></pre></li>
+<li>监听端口<br />
+<pre><code>app.listen(port,()=&gt;{
+    console.log('express 服务器启动'+port);
+});
+</code></pre></li>
+<li>到时候我们需要将src中的文件拷贝到dist中，端口只能设置为变量<br />
+<pre><code>let port=process.env.PORT || 8877;
+</code></pre></li>
+<li>服务器开启完毕，我们需要对具体的路由进行设置<br />
+<pre><code>&quot;use strict&quot;;
+const express=require('express');
+let route=express.Router();
+let accCtrl=require('../controller/accountCtrl.js');
+route.get('/test',accCtrl.test);
+module.exports=route;
+</code></pre></li>
+<li>路由可以对页面进行跳转，在上面我们提供给了accCtrl一个test方法<br />
+<pre><code>&quot;use strict&quot;;
+exports.test=(req,res)=&gt;{
+    //...
+}
+</code></pre></li>
+<li>将查询到的信息用模板显示在页面上<br />
+<pre><code>&quot;use strict&quot;;
+const xtpl=require('xtpl');
+const path=require('path');
+exports.test=(req,res)=&gt;{
+    //设置请求头
+    res.setHeader('Content-Type','text/html;charset=utf-8');
+    req.models.userinfo.find({},{},(err,datas)=&gt;{
+        //读模板，需要读取的路径是当前文件
+        xtpl.renderFile(path.join(__dirname,'../view/test.html'),{arr:datas},(err,html)=&gt;{
+            if(err){
+                res.end(err.message);//将错误消息的摘要响应到浏览器 (aa is not function)
+                console.log(err);//详细的错误堆栈信息打应到cmd面板上
+                return;
+            }
+            res.end(html);
+        });
+    });
+}
+</code></pre></li>
+</ol>
+<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>问题</h3>
+<ul>
+<li>总的来说程序没有报错，但是数据取不出来，推测应该是orm包没有下载好。</li>
+<li>解决办法：今天回过头去看看，发现其实是数据库中建立的表是user表，但是取的时候是userinfo，一直就取不出来数据。</li>
+</ul>
+<h3 id="gulpsrcdist"><a name="user-content-gulpsrcdist" href="#gulpsrcdist" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>用gulp管理(src拷贝到dist)</h3>
+<ol>
+<li>在项目的根目录下建立一个gulpfile.js的文件</li>
+<li>因为要用gulp管理，因此我们需要安装gulp<code>npm i gulp --save-dev</code></li>
+<li>在gulpfile.js文件中引入gulp包<br />
+<pre><code>'use strict';
+const gulp=require('gulp');
+</code></pre></li>
+<li>gulp管理后的提示<br />
+<pre><code>gulp.task('default',[],()=&gt;{
+    console.log('任务完成');
+});
+</code></pre></li>
+<li>gulp进行JS压缩以及拷贝<br />
+<pre><code>//JS压缩
+const minjs = require('gulp-uglify');
+const es6toes5 = require('gulp-babel');
+gulp.task('minjs',()=&gt;{
+    //将js文件压缩，将src目录结构拷贝到dist中
+    gulp.src(['./src/controller/*.js','./src/routes/*.js','./src/model/*.js'],{base:'src'})
+    .pipe(es6toes5({presets: ['es2015']}))//表示将 js文件由es6转换成es5
+    .pipe(minjs())//压缩
+    .pipe(gulp.dest('dist'));
+    console.log('压缩完毕');
+});
+</code></pre></li>
+</ol>
+<h3 id="git"><a name="user-content-git" href="#git" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>用git将项目管理起来</h3>
+<ol>
+<li>在项目文件夹下的package.json中添加依赖项</li>
+<li>通过<code>git bash</code>中的<code>git init</code>初始化仓库</li>
+<li><code>git add .</code>将文件提交到暂缓区</li>
+<li><code>git commit -m 'add'</code>提交</li>
+<li>在githup上新创建一个仓库，中间的<code>.gitignore</code>设置为<code>node</code></li>
+<li>将设置好的<code>.gitignore</code>文件内容拷贝一份到本地的<code>.gitignore</code>中</li>
+<li><code>git remote add origin master git仓库地址</code>取一个别名</li>
+</ol>
+<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>维护一致的编码风格</h3>
+<p>在项目根目录中添加.editorconfig文件在其中固定所有的代码风格，那么所有的编辑器就会自动读取这个文件<br />
+<pre><code># EditorConfig is awesome: &lt;a onclick=&quot;javascript:pageTracker._trackPageview('/outgoing/EditorConfig.org');&quot; href=&quot;http://EditorConfig.org&quot;&gt;http://EditorConfig.org&lt;/a&gt;
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{js,html,css}]
+charset = utf-8
+
+# Tab indentation (no size specified)
+[*.js]
+indent_style = tab
+tab_width = 4
+</code></pre></p>
+<h2 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>后台管理页面级功能</h2>
+<h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>列表静态页面设计</h3>
+<ol>
+<li>后台几乎所有的页面都有一个公共的头部和左侧菜单栏</li>
+<li>只有中间的内容不一样，我们可以在改变的地方放置一个占位符</li>
+<li>另外新开页面写上我们的改变的内容</li>
+<li>新的页面采用继承模板的形式</li>
+<li>在静态资源区建立一个index.html文件</li>
+<li>因为采用的是Bootstrap技术，我们引入Bootstrap的公共模板</li>
+<li>应该先将页面进行分析，在进行布局</li>
+</ol>
+<h3 id="git_1"><a name="user-content-git_1" href="#git_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>用git不能提交上去的问题</h3>
+<ul>
+<li>问题描述：将项目提交到githup上面进行托管的时候仓库拒绝访问</li>
+<li>解决办法：因为在githup上面的仓库里面是存在文件的，直接让自己的仓库和远程的连接，出问题。</li>
+<li>可以将仓库变成一个空仓库，README和忽略文件都不要有，再将自己的仓库和远程的连接，这样才能连接。</li>
+<li>还可以先将远程仓库克隆下来，再将自己的文件拷贝到克隆下来的仓库，在进行提交，一样可以连接。</li>
+</ul>
+<h3 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>主页模块分离</h3>
+<ol>
+<li>我们登录进来后看到的页面都是一块一块平凑而来</li>
+<li>我们要将中间部分分离成一个单独的模块</li>
+<li>新建一个页面layout作为公共的模板</li>
+<li>将要改变的部分提取出来，放上一个占位符<br />
+<pre><code>{{{block('body')}}}
+</code></pre></li>
+<li>使用xtpl替换模板</li>
+<li>在list页面里面先将layout页面中公共的部分继承过来<br />
+<pre><code>{{extend('./layout.html')}}
+{{#block('body')}}
+//我们要替换的部分
+{{/block}}
+</code></pre></li>
+<li>现在我们将页面拆分开来，但是将来访问的时候是在一个页面上访问</li>
+<li>我们通过路由进行设置<br />
+<pre><code>127.0.0.1:8877/admin/list
+</code></pre></li>
+<li>我们添加一个新的路由文件，搭建好主体<br />
+<pre><code>'use strict';
+const express=require('express');
+let adminRoute=express.Router();
+module.exports=adminRoute;
+</code></pre></li>
+<li>设计路由规则，首先我们要将数据显示出来</li>
+<li>查询显示页面设计一条get的路由规则，来实现列表数据的获取<br />
+<pre><code>const adminCtrl=require('./controller/adminCtrl.js');
+adminRoute.get('/admin/list',adminCtrl.getlist);
+</code></pre></li>
+<li>新增模块有两条路由规则</li>
+<li>首先要向服务器发送一个get请求获取到新增页面<br />
+<pre><code>adminRoute.get('/admin/list',adminCtrl.getlist);
+</code></pre></li>
+<li>将用户填写好的表单数据post提交给服务器，服务器将数据插入到数据库的表中<br />
+<pre><code>adminRoute.post('/admin/add',adminCtrl.postadd);
+</code></pre></li>
+<li>编辑操作中我们需要传参数，要确定当前是哪条数据需要修改<br />
+<pre><code>adminRoute.get('/admin/edit/:vid',adminCtrl.getedit);
+adminRoute.post('/admin/edit',adminCtrl.postedit);
+</code></pre></li>
+<li>删除，我么需要通过参数删除特定的数据<br />
+<pre><code>adminRoute.get('/admin/delete/:vid',adminCtrl.getdelete);
+</code></pre></li>
+<li>改造我们的list.html，将需要产生动态数据的地方写上占位符<br />
+<pre><code>{{#each(list)}}
+&lt;tr&gt;
+    &lt;td&gt;{{this.vid}}&lt;/td&gt;
+    &lt;td&gt;{{this.vtitle}}&lt;/td&gt;
+    &lt;td&gt;{{this.vsortno}}&lt;/td&gt;
+    &lt;td&gt;{{this.vvideid}}&lt;/td&gt;
+    &lt;td&gt;
+        //利用a标签的跳转向服务器发起请求
+        &lt;a href=&quot;/admin/edit/{{this.vid}}&quot;  class=&quot;btn btn-success&quot;&gt;编辑&lt;/a&gt;
+        &lt;input type=&quot;button&quot; class=&quot;btn btn-danger&quot; onclick=&quot;del{{this.vid}}&quot; value=&quot;删除&quot;&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+{{/each}}
+</code></pre></li>
+<li>查询的getlist函数中我们需要将数据库中的数据渲染到页面上</li>
+<li>先去数据库中查找videoinfo这个表中的数据</li>
+<li>调用xtpl.renderFile()将页面渲染<br />
+<pre><code>exports.getlist=(req,res)=&gt;{
+    //查询
+    res.models.videoinfo.find({},{},(err,datas)=&gt;{
+        let obj={list:datas};
+        xtpl.renderFile(path.join(__dirname,'../view/list.html'),obj,(err,html)=&gt;{
+            if(err){
+                res.end(err.message);
+                return;
+            }
+            res.end(html);
+        });
+    });
+}
+</code></pre></li>
+<li>将路由规则引入app.js中<br />
+<pre><code>const adminRoute = require('./routes/adminRoute.js');
+app.use('/',adminRoute);
+</code></pre></li>
+<li>app.js里面的videoinfo表写错了单词</li>
+<li>layout.html中路径问题<br />
+<pre><code>&lt;link href=&quot;/node_modules/bootstrap/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+</code></pre></li>
+</ol>
+<h3 id="paramsquery"><a name="user-content-paramsquery" href="#paramsquery" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>params、query的区别</h3>
+<ol>
+<li>如果url参数是通过?传递给服务器的话，使用req.query.id1可以获取的到值</li>
+<li>如果url参数是通过:传递给服务器的话，使用req.params.id2可以获取的到值，如果有了这个种格式，url地址栏就只要输入要传入参数的值就行，不需要带上键</li>
+</ol>
+<h3 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>新增页面</h3>
+<ol>
+<li>在按钮上面增加一个点击事件进行跳转<br />
+<pre><code>&lt;input type=&quot;button&quot; class=&quot;btn btn-info&quot; onclick=&quot;window.location='/admin/add';&quot; value=&quot;新增&quot;&gt;
+</code></pre></li>
+<li>增加add.html页面，同样也要继承layout.html</li>
+<li>用Bootstrap写一个新增页面，里面有一个富文本编辑器，需要我们用js动态生成</li>
+<li>在控制器中将页面渲染出去<br />
+<pre><code>exports.getadd = (req, res) =&gt; {
+  xtpl.renderFile(path.join(__dirname, '../view/add.html'),{}, (err, html) =&gt; {
+    if (err) {
+      res.end(err.message);
+      return;
+    }
+    res.end(html);
+  });
+}
+</code></pre></li>
+<li>解决乱码问题<br />
+<pre><code>app.all('admin/*',(req,res,next)=&gt;{
+    res.setHeader('Content-Type','text/html;charset=utf-8');
+    next();
+});
+</code></pre></li>
+</ol>
+<h3 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>富文本编辑器</h3>
+<ol>
+<li>引入JS文件<br />
+<pre><code>&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/ueditor/ueditor.config.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/ueditor/ueditor.all.min.js&quot;&gt; &lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/ueditor/lang/zh-cn/zh-cn.js&quot;&gt; &lt;/script&gt;
+</code></pre></li>
+<li>将ueditor文件夹拷贝到静态资源目录下</li>
+<li>创建一个富文本编辑器<br />
+<pre><code>&lt;script id=&quot;editor&quot; type=&quot;text/plain&quot; style=&quot;width:680px;height:500px;&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+UE.getEditor('editor');
+&lt;/script&gt;
+</code></pre></li>
+<li>我们拷贝过来代码的时候要注意，重定向跳转的时候路径有问题，需要更改<br />
+<pre><code>res.redirect('/ueditor/nodejs/config.json');
+</code></pre></li>
+<li>拷贝代码中用到了path，我们需要将path导入，以及我们的路径名需要更改<br />
+<pre><code>app.use(&quot;/ueditor/ue&quot;, ueditor(path.join(__dirname, 'statics'), function(req, res, next) {
+    //...
+});
+</code></pre></li>
+<li>将bodyParser这个包加载到express中使用<br />
+<pre><code>app.use(bodyParser());
+</code></pre></li>
+<li>设定上传图片的路由规则代码<br />
+<pre><code>app.use(&quot;/ueditor/ue&quot;, ueditor(path.join(__dirname, 'statics'), function(req, res, next) {
+  // ueditor 客户发起上传图片请求
+  if(req.query.action === 'uploadimage'){
+    var foo = req.ueditor;
+    var imgname = req.ueditor.filename;
+    var img_url = '/images/ueditor/';
+    res.ue_up(img_url); //你只要输入要保存的地址 。保存操作交给ueditor来做
+  }
+  //  客户端发起图片列表请求
+  else if (req.query.action === 'listimage'){
+    var dir_url = '/images/ueditor/';
+    res.ue_list(dir_url);  // 客户端会列出 dir_url 目录下的所有图片
+  }
+  // 客户端发起其它请求
+  else {
+    res.setHeader('Content-Type', 'application/json');
+    res.redirect('/ueditor/nodejs/config.json');
+}}));
+</code></pre></li>
+<li>我们上传到服务器的图片保存地址<br />
+<pre><code>statics/images/ueditor/用户上传的图片
+</code></pre></li>
+<li>添加了ueditor之后会报错//TODO</li>
+</ol>
+<h3 id="post"><a name="user-content-post" href="#post" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>获取post请求数据</h3>
+<ol>
+<li>在路由规则里面的请求报文对象接受一个data事件，可以获得提交数据<br />
+<pre><code>route.post('/admin/add',(req,res)=&gt;{
+    req.on('data',(data)=&gt;{
+        console.log(data);
+    });
+})
+</code></pre></li>
+<li>通过bodyParser这个第三方包去获取<br />
+- 在app.js中使用app.use(require(&lsquo;body-parser&rsquo;))<br />
+- 通过req.body.vtitle获取到请求报文体中的vtitle的值</li>
+</ol>
+<h3 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>新增的功能实现</h3>
+<ol>
+<li>获取到请求报文体中的值req.body.vname<br />
+<pre><code>exports.postadd=(req,res)=&gt;{
+    let vtitle=req.body.vtitle;
+    let vsortno=req.body.vsortno;
+    let vvideid=req.body.vvideid;
+    let vsummary=req.body.vsummary;
+    let vimg=req.body.vimg;
+    let vremark=req.body.editorValue;
+}
+</code></pre></li>
+<li>交给orm将数据插入到mysql表中的videoinfo中<br />
+<pre><code>let videoData={
+    vtitle:vtitle,
+    vsortno:vsortno,
+    vvideid:vvideid,
+    vsummary:vsummary,
+    vremark:vremark,
+    vimg:vimg
+};
+req.models.videoinfo.create(videoData,(err,item)=&gt;{
+    if(err){
+        res.end(err.message);
+        return;
+    }
+    //...
+});
+</code></pre></li>
+<li>提示新增成功并跳转到列表页面<br />
+<pre><code>res.end('&lt;script&gt;alert(&quot;新增成功&quot;);window.location=&quot;/admin/list&quot;;&lt;/script&gt;');
+</code></pre></li>
+<li><em>Cannot read property &lsquo;vsortno&rsquo; of undefined</em>错误<br />
+- 解决办法：app.use(bodyParser());中间件的使用在路由规则设定之前</li>
+</ol>
+<h3 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>视频上传的功能</h3>
+<p>一般一些小网站是不支持视频上传的功能的，因为存储视频需要很大的空间，一般是将视频图片存储在云上，直接使用提供给我们的接口看来实现视频的上传，如果大量的视频在自己的服务器上面，会增加流量和内存的消耗。而且存在自己的服务器上会被下载下来，不方便管理。</p>
+<h3 id="_12"><a name="user-content-_12" href="#_12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>编辑功能的实现</h3>
+<ol>
+<li>点击编辑按钮，浏览器会进行相应的跳转，跳转到特定的路由规则</li>
+<li>我们需要对特定条数的数据进行编辑，因此我们的路由规则中是有参数的</li>
+<li>我们点击编辑按钮会将特定的vid传给浏览器的参数</li>
+<li>向服务器发送请求，服务器或根据路由规则实现功能</li>
+<li>首先我们需要从数据库中取出特定的那条数据</li>
+<li>将取出的数据渲染到页面上，将特定数据填充到form表单中的所有元素的value中</li>
+<li>用户进行修改后，我们需要将所有的数据重新提交到服务器存入数据库中</li>
+<li>但是我们在form表单中提交的路由规则中的参数不是固定的，应该用vid替换</li>
+<li>在模板页中我们需要将value用占位符替换</li>
+<li>但是最大的问题是我们富文本中的内容没有办法用value显示出来</li>
+<li>撇开富文本的问题，我们设置路由规则</li>
+<li>首先从url中获取到vid的值<br />
+<pre><code>let vid=req.params.vid;
+</code></pre></li>
+<li>根据vid的值从mysql数据库中查找视频数据<br />
+<pre><code>//通过orm去数据库查找返回的结果是一个数组
+</code></pre></li>
+<li>拿到数据后渲染edit.html页面<br />
+<pre><code>exports.getedit=(req,res)=&gt;{
+    let vid=req.params.vid;
+    req.models.videoinfo.find({vid:vid},{},(err,data)=&gt;{
+        if(data.length&lt;=0){
+            res.end('id值非法，没有对应数据');
+            return;
+        }
+        xtpl.renderFile(path.join(__dirname, '../view/edit.html'),data[0], (err, html) =&gt; {
+        if (err) {
+          res.end(err.message);
+          return;
+        }
+        res.end(html);
+    });
+    });
+}
+</code></pre></li>
+</ol>
+<h3 id="_13"><a name="user-content-_13" href="#_13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>解决富文本显示我们存在数据库中数据的问题</h3>
+<ol>
+<li>查看官方文档的时候发现可以通过设置内容来实现富文本框显示内容<br />
+<pre><code>var ue=UE.getEditor('editor');
+ue.setContent('欢迎使用',false);
+</code></pre></li>
+<li>但是刷新页面后发现富文本的值不能使用</li>
+<li>当我们的浏览器从上往下执行，执行到<code>var ue=UE.getEditor('editor');</code>时，页面渲染是需要时间的，但是我们马上就要对它设值，所以不能用</li>
+<li>可以设置一个延迟，但是我们不知道要延迟多久<br />
+<pre><code>var content='{{vremark}}';
+setTimeout(function(){
+  ue.setContent(content,false);
+}, 1000);
+</code></pre></li>
+<li>但是我们输出的是一段被解析成HTML标签的字符串<br />
+<pre><code>&lt;p&gt;&lt;img src=&quot;/images/ueditor/802142432136400896.JPG&quot; title=&quot;&quot; alt=&quot;IMG_0635.JPG&quot;/&gt;&lt;/p&gt;
+</code></pre></li>
+<li>需要将<code>&amp;lt</code>;自动变成小于号<br />
+<pre><code>content=$('&lt;span /&gt;').html(content).text();
+</code></pre></li>
+<li>由于我们的jQuery是在页面底部加载的，因此我们需要添加onload事件。</li>
+<li>但是我们的富文本编辑器是不成功的，原生的富文本编辑器已经不能满足我们的需求，需改进下富文本编辑器。</li>
+<li>假设我们创建完编辑器之后然后执行一个回调函数，回调函数里面再去执行我们的设置值的事情。</li>
+<li>在我们的ueditor.all.js中我们找到getEditor函数主体。</li>
+<li>由上面推测可知我们需要传入一个回调函数，但是在return之前来执行这个回调函数显然是不合理的，因为我们的JS代码执行是非常快，而富文本编辑器渲染是需要时间的。</li>
+<li>我们可以在全局设置一个回调函数变量，在getEditor函数主体对全局变量赋值</li>
+<li>回调函数会在我们函数执行完毕之后执行，这样我们的富文本就能很好的渲染<br />
+<pre><code>var ve=UE.getEditor('editor',{},function(){
+    ue.setContent(content,false);
+});
+</code></pre></li>
+</ol>
+<h3 id="ittun"><a name="user-content-ittun" href="#ittun" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>ittun使用</h3>
+<ol>
+<li>启动服务器</li>
+<li>将startup-api接口里面的配置项改变，要填上子域名和端口号，一定是本地启动的端口号</li>
+</ol>
+<h3 id="_14"><a name="user-content-_14" href="#_14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>修改后保存的处理</h3>
+<ol>
+<li>获取主键<br />
+<pre><code>exports.postedit=(req,res)=&gt;{
+    let vid=req.params.vid;
+    //...
+}
+</code></pre></li>
+<li>利用orm将数据更新到数据库中<br />
+<pre><code>req.models.videoinfo.get(vid,(err,data)=&gt;{
+    //将页面上所有的数据同步给data中相应的属性
+    data.vtitle=req.body.vtitle;
+    data.vsortno=req.body.vsortno;
+    data.vvideid=req.body.vvideid;
+    data.vsummary=req.body.vsummary;
+    data.vremark=req.body.vremark;
+    data.vimg=req.body.vimg;
+    data.save();
+});
+</code></pre></li>
+<li>在form表单中的路由规则写错了，直接复制过来的<br />
+<pre><code>&lt;form action=&quot;/admin/edit/{{vid}}&quot; method=&quot;post&quot; class=&quot;form-horizontal&quot;&gt;
+</code></pre></li>
+</ol>
+<h3 id="_15"><a name="user-content-_15" href="#_15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>删除模块</h3>
+<ol>
+<li>我们一样也可以采用上面的模式来，但是为更好的用户体验</li>
+<li>应该采用ajax来实现页面无刷新直接删除</li>
+<li>我们在写代码的时候最好少嵌套</li>
+<li>jQuery中的ajax<br />
+- $.get(url,参数对象，成功的回调函数，服务器响应回来的数据格式)<br />
+- $.post(url,参数对象，成功的回调函数，服务器响应回来的数据格式)<br />
+- $.getJSON(url,参数对象，成功的回调函数)<br />
+- $.ajax()最全的</li>
+<li>我们需要根据后端返回的格式来使用JSON或XML，我们这里传回来的参数是JSON</li>
+<li>我们不需要对服务器传递参数，因为我们已经通过：形式来传参，因此data是null<br />
+<pre><code>var url='/admin/delete/{{vid}}';
+var data=null;
+$.getJSON(url,data,function(jsObj){
+    //...
+});
+</code></pre></li>
+<li>在这个ajax中，服务器响应回来的json对象会转换成一个JS对象</li>
+<li>这种删除在服务器可能会报错，为了更好的容错性，我们需要将错误响应到回调函数中</li>
+<li>在回调函数中我们需要根据vid的值删除数据</li>
+<li>然后将处理的结果响应回去，我们调用end方法的时候，都是将消息返回给浏览器</li>
+<li>但是中间是通过我们的异步对象xhr中的onreadystatechange</li>
+<li>onreadystatechange这个回调函数的方法体其实是这个$.getJSON()中的回调函数</li>
+<li>这个函数就会将你返回的的数据转换成一个JSON对象</li>
+<li>如果你的数据删除错误，那么应该返回一个错误信息，成功就有成功的处理</li>
+<li>在回调函数中一定要判断服务器响应给我们的数据到底是成功还是失败的</li>
+<li>那么如果我们返回的JS对象中有一个状态，告诉我们是成功还是失败，以及还要见错误信息提示出来<br />
+<pre><code>function del(vid){
+  if(!confirm('您是否删除这条数据')){
+    return;
+  }
+  var url='/admin/delete/{{vid}}';
+  var data=null;
+  $.getJSON(url,data,function(jsObj){
+    if(jsobj.status==1){
+      alert(jsObj.message);
+    }else{//成功
+      alert(jsObj.message);
+      // window.location.reload();//会出现页面翻白
+      window.location=window.location;
+    }
+  });
+}
+</code></pre></li>
+<li>因为已经商量好的响应回去的是JSON数据{&ldquo;status&rdquo;:1,&rdquo;message&rdquo;:&rdquo;提示语&rdquo;}</li>
+<li><pre><code>exports.getdelete=(req,res)=&gt;{
+    let vid=req.params.vid;
+    //返回的是一个JSON对象
+    let resObj={status:0,message:'删除成功'};
+    //一般在程序开发过程中，我们采用这种方式来判断是否是成功
+    let success=0;
+    let fail=1;
+    req.models.videoinfo.get(vid,(err,data)=&gt;{
+        if(err){
+                resObj.status=fail;
+                resObj.message=err.message;
+                res.end(JSON.stringify(resObj));
+                return;
+            }
+        data.remove((err)=&gt;{
+            if(err){
+                resObj.status=fail;
+                resObj.message=err.message;
+                res.end(JSON.stringify(resObj));
+                return;
+            }
+            res.end(JSON.stringify(resObj));
+        });
+    });
+}
+</code></pre></li>
+</ol>
+<h3 id="getfind"><a name="user-content-getfind" href="#getfind" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>get()和find()区别</h3>
+<ol>
+<li>get()返回的是唯一的一条数据</li>
+<li>find()返回的是一个数组</li>
+</ol>
+<h3 id="api"><a name="user-content-api" href="#api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>关于API的文档如何去看</h3>
+<ol>
+<li>写静态(里面的数据是通过ajax去访问后台程序员开发出来的api接口进行操作的)</li>
+<li>一般会得到一些由后台人员书写的API接口规范</li>
+<li>我们需要对页面进行怎么样的操作，一般都是看什么路由规则</li>
+<li>商定好请求方式是get还是post，传递了哪些参数，返回的格式以及具体的格式样例</li>
+</ol>
+<h3 id="_16"><a name="user-content-_16" href="#_16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>登录页面思路</h3>
+<ol>
+<li>确定登录的路由规则 </li>
+<li>通过get请求拿到我们的登录页面</li>
+<li>当用户填写完数据之后点击提交按钮，会发送一个我们的post请求</li>
+<li>验证码是图片，也要向服务器发送一次请求</li>
+<li>我们要将用户名密码验证码发送给服务器</li>
+<li>服务器获取到浏览器发送过来的用户填写的验证码字符串和服务器生成的验证码字符串比较</li>
+<li>验证码的作用就是防止暴力破解</li>
+<li>我们先在服务器创建好一个验证码字符串，并保存起来</li>
+<li>将创建好的验证码以图片的形式显示在浏览器</li>
+<li>服务器拿到浏览器发送过来的验证码和自己本身生成的验证码进行比较</li>
+<li>我们要先是登录才能进入我们的页面中访问我们的功能</li>
+<li>我们使用express-session保存我们的验证码</li>
+<li>每个人访问我们的网站，验证码是不一样的</li>
+<li>浏览器在发送请求的时候要将自己的浏览器的id一起发送过去</li>
+<li>浏览器发送请求，服务器会通过set-cooike随机字符串产生一个浏览器的身份ID</li>
+<li>当浏览器获取到set-cookie指令以后，就会将身份ID保存到浏览器的内存或者磁盘上</li>
+<li>当下一次再去发送这个网站的其他页面请求的时候，就会同时带上这个身份ID给服务器</li>
+</ol>
+<h3 id="sessioncooike"><a name="user-content-sessioncooike" href="#sessioncooike" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>session和cooike</h3>
+<ul>
+<li>session：是一种服务端的技术，一般是结合cookie来进行服务器的状态维持，本质上是在服务器的内存中开辟了一块空间</li>
+<li>cookie是客户端的一种能够存储少量(4k)文本的技术，类似于sessionStorage和localStorge这种技术</li>
+<li>一般就是用在登录以后的状态的维持中的浏览器身份id的保存(express-session)就是用了它</li>
+</ul>
+<h3 id="_17"><a name="user-content-_17" href="#_17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>登录页面的渲染</h3>
+<ol>
+<li>登录页面的bootstrap实现</li>
+<li>我们每次点击图片的时候就会进行一次请求</li>
+<li>要将图片的src设置为跳转的路由<br />
+<pre><code>$('#vcodeimg').click=function(){
+    //在IE浏览器中不能实现刷新
+    // var url='/account/vcode';
+    var url='/account/vcode'+Math.random();
+    //这样页面每次刷新的时候的url都不一样，就可以刷新
+    // this.src=url;//原生的
+    $(this).attr('src',url);
+}
+</code></pre></li>
+<li>设置路由规则<br />
+<pre><code>route.get('/account/login',accCtrl.getlogin);
+route.post('/account/login',accCtrl.postlogin);
+route.get('/account/vcode',accCtrl.getvcode);
+</code></pre></li>
+<li>第一次发送请求渲染页面<br />
+<pre><code>exports.getlogin = (req,res)=&gt;{
+    xtpl.renderFile(path.join(__dirname,'../view/login.html'),{},(err,html)=&gt;{
+        if(err)
+        {
+            res.end(err.message); 
+            console.log(err); 
+            return; 
+        }
+        res.end(html);
+    });
+}
+</code></pre></li>
+</ol>
+<h3 id="_18"><a name="user-content-_18" href="#_18" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>验证码实现</h3>
+<ol>
+<li>产生一个验证码字符串<br />
+<pre><code>let vcode=parseInt(Math.random()*9000+1000);
+</code></pre></li>
+<li>将验证码字符串变成一个图片响应回去<br />
+<pre><code>const captchapng = require('captchapng');
+var p = new captchapng(80,30,vcode);
+p.color(0, 0, 0, 0);
+p.color(80, 80, 80, 255);
+var img = p.getBase64();
+var imgbase64 = new Buffer(img,'base64');
+res.writeHead(200, {
+  'Content-Type': 'image/png'
+});
+res.end(imgbase64);
+</code></pre></li>
+<li>当浏览器第一次请求网页的时候就将浏览器向浏览器写一个身份标识到他的cookie中<br />
+<pre><code>const session=require('express-session');
+app.use(session({
+  secret: 'keyboard cat',//加密的秘钥
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+</code></pre></li>
+<li>将验证码字符串保存在session中，就是将验证码存在服务器<br />
+<pre><code>req.session.vcode=vcode;
+</code></pre></li>
+<li>点击图片不能刷新问题的解决<br />
+<pre><code>$('#vcodeimg').click(function(){//jQuery不熟悉，语法上的错误
+  var url='/account/vcode?vid='+Math.random();
+  $(this).attr('src',url);
+});
+</code></pre></li>
+</ol>
+<h3 id="post_1"><a name="user-content-post_1" href="#post_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>登录post验证过程</h3>
+<ol>
+<li>获取浏览器发送过来的请求报文体中的数据</li>
+<li>获取服务器中属于这个浏览器的验证码字符串与浏览器提交过来的验证码对比</li>
+<li>验证用户名和密码的正确性</li>
+<li>跳转到/admin/list<br />
+<pre><code>exports.postlogin = (req,res)=&gt;{
+    let uname=req.body.uname;
+    let upwd=req.body.upwd;
+    let vcode=req.body.vcode;
+    let vodeFormSession=req.session.vcode;
+    if(vodeFormSession!=vcode){
+      res.end('&lt;script&gt;alert(&quot;验证码输入错误&quot;);&lt;/script&gt;');
+      return;
+    }
+    req.models.user.find({uname:uname,upwd:upwd},{},(err,datas)=&gt;{
+      if(err){
+          res.end('&lt;script&gt;alert(&quot;用户名和密码错误&quot;);&lt;/script&gt;');
+          return;
+      }
+      res.end('&lt;script&gt;alert(&quot;登录成功&quot;);window.location=&quot;/admin/list&quot;&lt;/  script&gt;');
+    });
+}
+</code></pre></li>
+<li>验证码输入总是错误<br />
+在app.js中初始化数据库模型的时候，将models上的属性写错，写成userinfo，这边用的是user</li>
+<li>我们登录时要将我们的用户名记录，显示在list页面中</li>
+<li>在跳转之前将我们的验证码存储在req.session中<br />
+<pre><code>req.session.uname=uname;
+</code></pre></li>
+<li>在模板页面中显示我们的用户<br />
+<pre><code>&lt;p class=&quot;navbar-text navbar-right&quot;&gt;欢迎【{{loginname}}】登陆&lt;a href=&quot;#&quot; class=&quot;navbar-link&quot;&gt;退出&lt;/a&gt;&lt;/p&gt;
+</code></pre></li>
+<li>我们加载list页面时将用户也一起输出<br />
+<pre><code>let obj={list:datas,loginname:req.session.uname};
+</code></pre></li>
+</ol>
+<h3 id="_19"><a name="user-content-_19" href="#_19" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>统一登录之后才能进入后台</h3>
+<ol>
+<li>进入到我们的admin中所有的路由规则都需要进行验证</li>
+<li>只有我们是登录成功的才能进行访问</li>
+<li>只要我们session中有值，那么说明我们登录成功<br />
+<pre><code>app.all('/admin/*',(req,res,next)=&gt;{
+    if(req.session.uname==null){
+        res.end('&lt;script&gt;alert(&quot;用户未登录&quot;);window.location=&quot;/account/login&quot;;&lt;/script&gt;');
+    }
+    next();
+});
+</code></pre></li>
+</ol>
+<h3 id="_20"><a name="user-content-_20" href="#_20" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>退出功能的实现</h3>
+<ol>
+<li>退出是一个超链接，超链接可以跳转，发送请求<br />
+<pre><code>&lt;a href=&quot;/account/logout&quot; class=&quot;navbar-link&quot;&gt;退出&lt;/a&gt;
+</code></pre></li>
+<li>我们需要给退出提供一个路由规则<br />
+<pre><code>route.get('/account/logout',accCtrl.getlogout);
+</code></pre></li>
+<li>将req.session.uname这个登录标识的值设置为null<br />
+<pre><code>req.session.uname=null;
+</code></pre></li>
+<li>跳转到登录页面<br />
+<pre><code>res.end('&lt;script&gt;alert(&quot;退出成功&quot;);window.location=&quot;/account/login&quot;&lt;/script&gt;');
+</code></pre></li>
+</ol>
+<h3 id="_21"><a name="user-content-_21" href="#_21" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>用户登录不成功时优化</h3>
+<pre><code>res.end('&lt;script&gt;alert(&quot;验证码输入错误&quot;);window.location=&quot;/account/login&quot;&lt;/script&gt;');
+res.end('&lt;script&gt;alert(&quot;用户名和密码错误&quot;);window.location=&quot;/account/login&quot;&lt;/script&gt;');
+</code></pre>
+
+<h3 id="md5"><a name="user-content-md5" href="#md5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>密码的加密(md5)</h3>
+<ul>
+<li>在数据库中存在的是明文的话，将数据库破解后，就会很危险，要将数据库的密码存储为密文。</li>
+<li>通常加密方式<ul>
+<li>SHA1</li>
+<li>SHA128</li>
+<li>SHA256</li>
+<li>MD5</li>
+</ul>
+</li>
+<li>对称加密：可逆</li>
+<li>非对称加密<ul>
+<li>公钥负责加密，通常在互联网上流通的</li>
+<li>私钥负责解密，一般是存储在服务器上</li>
+<li>应用：https，通过加密以后将数据在互联网上流通的</li>
+</ul>
+</li>
+<li>行业规则：MD5加密的密码不可逆<br />
+<pre><code>const crypto=require('crypto');
+const secret='adcdefg';
+const hash=crypto.createHmac('md5',secret)
+                 .update('I love cupcakes')
+                 .digest('hex');
+</code></pre><br />
+1. 在项目中设置一个工具类的文件夹<br />
+2. 工具类的文件夹中新建一个md5entry.js专门负责我们的加密<br />
+3. 在我们nodejs的官网上面我们可以找到一个加密模块crypto<br />
+4. 将MD5加密过程封装成一个模块，并将模块暴露出去<br />
+<pre><code>'use strict';
+const crypto=require('crypto');
+const secret='adcdefg';
+module.exports=function(str){
+    return crypto.createHmac('md5',secret)
+                 .update(str)
+                 .digest('hex');
+};
+
+</code></pre><br />
+5. 在我们登录提交时将密码加密<br />
+<pre><code>upwd.=require('../tools/md5entry.js')(upwd);
+</code></pre></li>
+</ul>
+<h3 id="_22"><a name="user-content-_22" href="#_22" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>分页功能</h3>
+<ol>
+<li>查询出真正属于这页的数据<br />
+- offset：跳过多少条数据<br />
+- limit：取得多少条数据</li>
+<li>确定好这个分页的总页数<br />
+- 分页的总页数=表中数据的总条数/页容量<br />
+- orm.models.videoinfi.count();</li>
+<li>页面和页容量都要传递服务器</li>
+<li>获取到数据表中的数据总条数<br />
+<pre><code>req.models.videoinfo.count({},(err,count)=&gt;{
+    //...
+}
+</code></pre></li>
+<li>计算出总页数，产生一个数组<br />
+<pre><code>let pages=[];
+for (var i = 1; i &lt; count; i++) {
+    pages.push(i);
+}
+//在数据库中查找后传给我们的浏览器
+let obj={list:datas,loginname:req.session.uname,pages:pages};
+</code></pre></li>
+<li>因为是动态生成，我们需要更改视图 <br />
+<pre><code>{{#each(pages)}}
+    &lt;li&gt;&lt;a href=&quot;/admin/list?pageindex={{this}}&amp;pagesize=1&quot;&gt;{{this}}&lt;/a&gt;&lt;/li&gt;
+{{/each}}
+</code></pre></li>
+<li>动态计算出跳过的总条数<br />
+<pre><code>let pageIndex=parseInt(req.query.pageindex);
+let pageSize=parseInt(req.query.pagesize);
+let skipCount=(pageIndex-1)*pageSize;
+req.models.videoinfo.find({},{offset:skipCount,limit:pageSize},(err,datas)=&gt;{
+    //...
+}
+</code></pre></li>
+<li>让刚开始进来list的时候有一个默认值<br />
+<pre><code>let pageIndex=parseInt(req.query.pageindex||1);
+let pageSize=parseInt(req.query.pagesize||1);
+</code></pre></li>
+<li>一般的情况下一页显示10条数据<br />
+<pre><code>for (var i = 1; i &lt; Math.ceil(count/10)+1; i++) {
+    pages.push(i);
+}   
+</code></pre></li>
+</ol>
+<h3 id="_23"><a name="user-content-_23" href="#_23" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>查找</h3>
+<ol>
+<li>模糊查询</li>
+<li>在计算总条数的时候有条件<br />
+<pre><code>req.models.videoinfo.count({vtitle:orm.like('%node%')},(err,count)=&gt;{
+    //...
+}
+</code></pre></li>
+<li>将数据动态化，点查询的时候提交</li>
+<li>也有分页</li>
+<li>给查询绑定点击事件<br />
+<pre><code>&lt;input type=&quot;button&quot; class=&quot;btn btn-success&quot; onclick=&quot;search()&quot; value=&quot;查询&quot;&gt;
+</code></pre></li>
+<li>获取文本框的值<br />
+<pre><code>var searchValue=$('#title').val();
+</code></pre></li>
+<li>发送请求到/admin/list中<br />
+<pre><code>window.location='/admin/list?searchValue='+searchValue;
+</code></pre></li>
+<li>在服务器获取到我们输入框的值<br />
+<pre><code>let searchValue=req.query.searchValue;
+</code></pre></li>
+<li>更改我们的模板<br />
+<pre><code>{vtitle:orm.like('%'+searchValue+'%')}
+</code></pre></li>
+<li>我们用到了我们的orm包，将orm设置为全局<br />
+<pre><code>global.orm=orm;
+</code></pre></li>
+<li>我们应该将我们输入的查询信息存储起来</li>
+<li>在我们的url中有我们的查询信息</li>
+<li>在我们的input标签中我们需要添加一个value值<br />
+<pre><code>&lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;请输入视频名称&quot; aria-describedby=&quot;basic-addon1&quot; id=&quot;title&quot; value=&quot;{{searchValue}}&quot;&gt;
+</code></pre></li>
+<li>将来searchValue可以通过渲染回去<br />
+<pre><code>let obj={list:datas,loginname:req.session.uname,pages:pages,searchValue:searchValue};
+</code></pre></li>
+<li>但是有一个小问题就是我们的放在页码上的时候我们会发现并没有searchValue值，我们需要对代码进行修改<br />
+<pre><code>&lt;li&gt;&lt;a href=&quot;/admin/list?pageindex={{this}}&amp;pagesize=10?searchValue={{searchValue}}&quot;&gt;{{this}}&lt;/a&gt;&lt;/li&gt;
+</code></pre></li>
+</ol>
+<h3 id="gulpjscss"><a name="user-content-gulpjscss" href="#gulpjscss" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>使用gulp进行JS和CSS的压缩</h3>
+<ol>
+<li>使用gulp-uglify对JS进行压缩<br />
+<pre><code>const minjs = require('gulp-uglify');
+</code></pre></li>
+<li>因为我们使用了ES6语法，我们需要将其全部转换<br />
+<pre><code>const es6toes5 = require('gulp-babel');
+</code></pre></li>
+<li>对JS进行压缩<br />
+<pre><code>gulp.task('minjs',()=&gt;{
+    //将js文件压缩，将src目录结构拷贝到dist中
+    gulp.src(['./src/controller/*.js','./src/routes/*.js','./src/model/*.js','./src/tools/*.js','./src/statics/js/*.js'],{base:'src'})
+    .pipe(es6toes5({presets: ['es2015']}))//表示将 js文件由es6转换成es5
+    .pipe(minjs())//压缩
+    .pipe(gulp.dest('dist'));
+    console.log('压缩完毕');
+});
+</code></pre></li>
+<li>CSS压缩<br />
+<pre><code>const mincss=require('gulp-clean-css');
+gulp.task('mincss',()=&gt;{
+    gulp.src(['./src/statics/css/*.css'],{base:'src'})
+    .pipe(mincss({compatibility: 'ie8'}))
+    .pipe(gulp.dest('dist'));
+    console.log('CSS压缩完毕');
+});
+</code></pre></li>
+</ol>
+<h3 id="gulp-revcssmd5"><a name="user-content-gulp-revcssmd5" href="#gulp-revcssmd5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>gulp-rev进行css的文件名添加MD5</h3>
+<ul>
+<li>我们的项目上线了，那个用户端的CSS文件可能存储在用户端的浏览器中，我们更新了CSS样式之后，如果用户不强制刷新的话有可能看不到更新</li>
+<li>我们使用gulp-rev进行css的文件名添加MD5<br />
+<pre><code>const rev=require('gulp-rev');
+gulp.task('cssmd5',()=&gt;{
+
+    .pipe(rev())//通过rev()在CSS中加上一个md5的字符串的后缀
+    .pipe(gulp.dest('dist'));
+    console.log('CSS压缩完毕');
+});
+</code></pre></li>
+<li>我们需要将我们的md5文件和html中的一致</li>
+<li>不仅仅是CSS可以md5化，我们的JS图片这些静态资源都可以MD5化</li>
+<li>将html文件中引用到的css文件的名称替换成MD5<br />
+<pre><code>const revCollector=require('gulp-rev-collector');
+</code></pre></li>
+<li>自动生成一个manifest.json文件文件中将原来的site.css和新的有md5建立key-vlue关系<br />
+<pre><code>gulp.task('cssmd5',()=&gt;{
+    gulp.src(['./src/statics/css/*.css'],{base:'src'})
+    .pipe(rev.manifest());
+});
+</code></pre></li>
+</ul>
+<h3 id="gulp-rev-collector"><a name="user-content-gulp-rev-collector" href="#gulp-rev-collector" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>利用gulp-rev-collector进行文件路径替换</h3>
+<ol>
+<li></li>
+</ol></article></body></html>

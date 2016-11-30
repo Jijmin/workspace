@@ -955,3 +955,94 @@ let obj={list:datas,loginname:req.session.uname,pages:pages,searchValue:searchVa
 ```
 <li><a href="/admin/list?pageindex={{this}}&pagesize=10?searchValue={{searchValue}}">{{this}}</a></li>
 ```
+
+### 使用gulp进行JS和CSS的压缩
+1. 使用gulp-uglify对JS进行压缩
+```
+const minjs = require('gulp-uglify');
+```
+2. 因为我们使用了ES6语法，我们需要将其全部转换
+```
+const es6toes5 = require('gulp-babel');
+```
+3. 对JS进行压缩
+```
+gulp.task('minjs',()=>{
+    //将js文件压缩，将src目录结构拷贝到dist中
+    gulp.src(['./src/controller/*.js','./src/routes/*.js','./src/model/*.js','./src/tools/*.js','./src/statics/js/*.js'],{base:'src'})
+    .pipe(es6toes5({presets: ['es2015']}))//表示将 js文件由es6转换成es5
+    .pipe(minjs())//压缩
+    .pipe(gulp.dest('dist'));
+    console.log('压缩完毕');
+});
+```
+4. CSS压缩
+```
+const mincss=require('gulp-clean-css');
+gulp.task('mincss',()=>{
+    gulp.src(['./src/statics/css/*.css'],{base:'src'})
+    .pipe(mincss({compatibility: 'ie8'}))
+    .pipe(gulp.dest('dist'));
+    console.log('CSS压缩完毕');
+});
+```
+
+### gulp-rev进行css的文件名添加MD5
+- 我们的项目上线了，那个用户端的CSS文件可能存储在用户端的浏览器中，我们更新了CSS样式之后，如果用户不强制刷新的话有可能看不到更新
+- 我们使用gulp-rev进行css的文件名添加MD5
+```
+const rev=require('gulp-rev');
+gulp.task('cssmd5',()=>{
+    gulp.src(['./src/statics/css/*.css'],{base:'src'})
+    .pipe(rev())//通过rev()在CSS中加上一个md5的字符串的后缀
+    .pipe(gulp.dest('dist'));
+    console.log('CSS压缩完毕');
+});
+```
+- 我们需要将我们的md5文件和html中的一致
+- 不仅仅是CSS可以md5化，我们的JS图片这些静态资源都可以MD5化
+- 将html文件中引用到的css文件的名称替换成MD5
+```
+const revCollector=require('gulp-rev-collector');
+```
+- 自动生成一个manifest.json文件文件中将原来的site.css和新的有md5建立key-vlue关系
+```
+gulp.task('cssmd5',()=>{
+    gulp.src(['./src/statics/css/*.css'],{base:'src'})
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('./src/rev/'));//拷贝到这个目录下
+});
+```
+
+### 利用gulp-rev-collector进行文件路径替换
+```
+const revCollector=require('gulp-rev-collector');
+gulp.task('cssmd5replace',()=>{
+    gulp.src(['./src/rev/**/*.json','./src/view/*.html'],{base:'src'})
+    .pipe(revCollector())//通过rev()在CSS中加上一个md5的字符串的后缀
+    //.pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist'));
+    console.log('CSS压缩完毕');
+});
+```
+但是我们文件的路径还是没有更改，我们需要手动设置rev-mainfest.json文件里面的文件路径
+```
+{
+  "/css/site.css": "/css/site-20a5d09f15.css"
+}
+```
+占时还没有找到将上面路径解决的办法，只能自己手动更改
+
+### 用一条指令直接将用gulp进行打包
+```
+gulp.task('default',['minjs','mincss','cssmd5','cssmd5replace'],()=>{
+    console.log('任务完成');
+});
+```
+
+### 利用gulp-htmlmin和gulp-imagemin完成html和图片的压缩
+```
+const htmlmin = require('gulp-htmlmin');
+gulp.src(['./src/rev/**/*.json','./src/view/*.html'],{base:'src'})
+.pipe(htmlmin({collapseWhitespace: true}));
+```

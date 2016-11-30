@@ -139,7 +139,8 @@ storage.push(this);
 19. 改变localStorage里面的数据，并且要将字符串装换成字符串
 ```
 window.localStorage.setItem('PersonInfo',JSON.stringify(storage));
-``` 
+```
+
 20. 将数据写入本地缓存中
 ```
 var data=new PersonInfo(name,pwd);
