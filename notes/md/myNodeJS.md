@@ -1046,3 +1046,14 @@ const htmlmin = require('gulp-htmlmin');
 gulp.src(['./src/rev/**/*.json','./src/view/*.html'],{base:'src'})
 .pipe(htmlmin({collapseWhitespace: true}));
 ```
+
+### 利用src和dest完成文件的拷贝功能
+```
+gulp.task('copyfile',()=>{
+    gulp.src(['./src/statics/images/**/*.*',
+                        './src/statics/node_modules/**/*.*',
+                        './src/statics/ueditor/**/*.*',
+                        './src/app.js'],{base:'src'})
+    .pipe(gulp.dest('dist'));
+});
+```

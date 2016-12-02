@@ -164,3 +164,71 @@ $scope.$watch('todoList',function(newVal,oldValue){
 },true);
 ```
 23. 但是我在这里犯了一个很严重的问题，我们的逻辑是切换的选项是一个布尔值，不是一个条件判断
+24. 在双击页面的时候没有聚焦
+```
+app.directive('editFoucs',function(){
+  return {
+    link:function(scope,ele,attr){
+      ele.on('dblclick',function(){
+        //转换成JQlite对象
+        angular.element(this).find('input').eq(1)[0].focus();
+      });
+    }
+  }
+});
+```
+25. 创建一个指令要在页面添加上我们的指令
+```
+<li edit-foucs ng-repeat="todo in todoList | filter:completedValue" ng-class="{completed:todo.completed,editing:todoedit==todo}">
+//...
+</li>
+```
+26. 改造成单页面应用程序
+27. 创建一个路由模块，angular里面路由是分开的
+28. 因此我们需要将路由模块引入
+```
+<script src="node_modules/angular-route/angular-route.js"></script>
+```
+29. 定义一个路由，将路由注入我们的模块中
+```
+var app=angular.module('todoApp',['ngRoute'],function ($routeProvider) {
+  $routeProvider
+    .when('/:completedValue?',{
+      //:表示改参数可以变换
+      //加上?表示可以为空
+      templateUrl:'template/todoTemplate.html',
+      controller:'todoCtrl'
+    })
+});
+```
+30. 我们对下面按钮的切换会有锚点跳转，页面没有刷新，所以我们需要进行路由设置
+31. 将我们的页面分离出来方便路由控制
+32. 添加一个我们的指令`<ng-view></ng-view>`占位显示
+33. 但是一个问题就是我们会发现数据没有变化，我们需要将数据存储在我们localStorage中
+```
+function setTodoList(todoList) {
+  localStorage.setItem("todoList",JSON.stringify(todoList));
+}
+//获取数据
+function getTodoList() {
+  return JSON.parse(localStorage.getItem("todoList")||'[]');
+}
+```
+34. 只能通过监视completedValue的值才能实时存储我们的数据
+```
+$scope.routeParamsCompletedValue=$routeParams.completedValue;
+$scope.$watch('routeParamsCompletedValue',function (newVal,oldVal) {
+  switch(newVal){
+  case 'active':
+    $scope.completedValue={completed:false};
+    break;
+  case 'completed':
+    $scope.completedValue={completed:true};
+    break;
+  default:
+    $scope.completedValue={};
+    break;
+  }
+});
+```
+35. 但是发现有一个问题，就是我们新添加一条数据的时候，再刷线，我们的数据才会存储起来，其他的时候在数据前面打钩或者是去掉钩再切换时是没有得到对应的改变的
