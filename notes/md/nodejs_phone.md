@@ -163,9 +163,264 @@ route.get('/api/getvideo/',apiCtrl.getvideo);
 ```
 18. 获取指定vid的视频详情和视频播放id
 ```
-
+exports.getvideo=(req,res)=>{
+  let resObj={status:successState,message:''};
+  let vid=req.query.vid;
+  let sql='select vvideid,vremark from videoinfo where vid='+vid; 
+  req.db.driver.execQuery(sql,(err,datas)=>{
+    //判断是否异常
+    if(err){
+      resObj.status=fialState;
+      resObj.message=err.message;
+      res.end(JSON.stringify(resObj));
+      return;
+    }
+    //获取数据成功
+    resObj.message=datas;
+    res.end(JSON.stringify(resObj));
+  });
+}
 ```
 
 ### 利用MUI这个前端框架来实现移动站点
+1. 下载HBuilder
+2. 创建一个MUIAPP文件夹，这个就是我们将来在手机上运行的东西
+3. 新建一个移动APP
+4. 选择MUI项目
+5. 可以对其进行一些系统项的配置
+6.  MUI开发规则
+- 除了固定栏以外，一切内容都要包裹在mui_content中
+- 页面初始化必须执行mui.init方法
+7. 头部固定栏我们直接在hello MUI 上拷贝过来
+8. 后面的内容放入我们的mui-content
+9. 搜索框以及图文列表
+10. 我们图片是从后台获取的，为了减少服务器的压力，我们将图片存放在七牛上
+11. 将我们的图片的外链地址更改在我们的图片位置
+12. 我们可以使用模板将我们的视频列表输出
+13. 使用underscore.js模板工具
+```
+<script type="text/template" id="tpl">
+    <% for(var i = 0; i < message.length; i++) { %> 
+    <% var item = message[i] %>     
+    <li class="mui-table-view-cell mui-media">
+        <a class="mui-navigate-right">
+            <img class="mui-media-object mui-pull-left" src="<%=item.vimg%>">
+            <div class="mui-media-body">
+                <%=item.vtitle%>
+                <p class="mui-ellipsis"><%=item.vsummary%></p>
+            </div>
+        </a>
+    </li>
+    <% } %>
+</script>
+```
+14. 利用MUI的ajax方法去API服务器请求数据结合模板生成数据即可
+```
+function getlist(){
+    var url='http://127.0.0.1:8899/api/getlist?pageIndex=1';
+    //接收JSON数据，已经传了参数，第二个参数是null，第三个参数是一个成功的回调函数
+    mui.getJSON(url,null,function(jsObj){
+        if(jsObj.status!=0){
+            alert(jsObj.message);
+            return;
+        }
+        //结合模板进行数据渲染
+        //1.0获取到模板字符串的对象
+        var tplStr=document.querySelector('#tpl').innerHTML;
+        //2.0调用underscore中的template实例化模板对象，解析模板，返回内容，将结果填充页面中
+        document.querySelector('#list').innerHTML=_.template(tplStr, jsObj);
+    });
+}
+getlist();
+```
+15. 在我们APP开发中，若要使用HTML5+扩展API，必须等到plusready事件发生后才能正常使用，否则可能会报错，但是这个方法在浏览器是不支持的。
+```
+mui.plusReady(function(){
+    getlist();
+});
+```
+16. 出现了一个跨域问题
+```
+XMLHttpRequest cannot load http://127.0.0.1:8899/api/getlist?pageIndex=1. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8020' is therefore not allowed access.
+```
+17. 解决办法
+- jsonp方式去访问
+- 只需要在NodeJS服务器中添加几个响应报文即可完成
+```
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
+```
+18. 没有报错，显示字符串信息
+```
+function (n){return o.call(this,n,m)}
+```
+19. 通过这种方式我们发送了两次请求
+20. 浏览器对服务器的跨域设置是有一些不兼容性的，如果使用mui中的getJSON()方法对于res.header("Access-Control-Allow-Headers", "X-Requested-With");是不兼容的，会发出两次请求
+21. 我们只能更改使用的模板，使用jquery.tmpl.js模板
+```
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+```
+```
+<script type="text/x-jquery-tmpl" id="tpl">
+    {{each(i,item) message}}     
+    <li class="mui-table-view-cell mui-media">
+        <a class="mui-navigate-right">
+            <img class="mui-media-object mui-pull-left" src="${item.vimg}">
+            <div class="mui-media-body">
+                ${item.vtitle}
+                <p class="mui-ellipsis">${item.vsummary}</p>
+            </div>
+        </a>
+    </li>
+    {{/each}}
+</script>
+```
+```
+function getlist(){
+    var url='http://127.0.0.1:8899/api/getlist?pageIndex=1';
+    mui.getJSON(url,null,function(jsObj){
+        if(jsObj.status!=0){
+            alert(jsObj.message);
+            return;
+        }
+        var resHtml=$('#tpl').tmpl(jsObj);
+        $('#list').html(resHtml);
+    });
+}
+$(function(){
+    getlist();
+});
+```
+22. 我们点击页面上的列表我们就需要跳转到播放页面，在我们的HBuilder中新建一个含有mui的html
+23. 头部是一个有返回主页面的头部，中间视频简介区域我们需要自己手动设置
+24. 视频播放区域我们只需要留有一个div的位置，到时候通过腾讯的JS插件生成出来
+25. 下面的是一个tab选项卡，课程介绍和章节管理
+26. 因为我们每点击一次列表就会进入到我们对应的视频播放区域
+```
+<a href="/videoApp/play.html?vid=${item.vid}" class="mui-navigate-right">
+```
+27. 实现了我们从视频列表页跳转到详情页，那么我们还需要将视频显示出来，以及对应的详情信息
+28. 出现问题
+- 问题描述：jquery.min.js:4 GET http://127.0.0.1:8899/api/getvideo/vid=16 404 (Not Found)
+- 解决办法：$.getJSON('http://127.0.0.1:8899/api/getvideo?vid='+vid,null,function(data){
+- 将参数前面的?写错了
+- 但是没有数据显示出来
+- 我们的message是一个数组，加上索引
+- $("#item1").html(data.message[0].vremark);
+
+### 后台管理系统所有的静态资源功能不能实现
+将我们设置静态资源放在设置路由规则之前
+
+### 视频添加
+1. 将我们在腾讯视频上上传的视频打开
+2. url地址栏就有我们的id编号
+3. 复制过来保存到我们的数据库
+4. [腾讯视频播放插件](http://www.cnblogs.com/zgzy/p/4396366.html)
+5. 将腾讯提供给我们的tvp.player.js下载下来，放到我们的文件夹下
+6. 引入腾讯视频播放器组件
+```
+<script src="js/tvp.player.js"></script>
+```
+7. 对我们的插件的参数进行设置
+```
+function setVideo(vid){
+  //定义视频对象
+  var video = new tvp.VideoInfo();
+  //向视频对象传入视频vid
+  video.setVid(vid);//替换成自己的视频id
+  //定义播放器对象
+  var player = new tvp.Player('100%', 240);
+  //设置播放器初始化时加载的视频
+  player.setCurVideo(video);
+  //设置精简皮肤，仅点播有效
+  //player.addParam("flashskin", "http://imgcache.qq.com/minivideo_v1/vd/res/skins/TencentPlayerMiniSkin.swf");
+  //输出播放器,参数就是上面div的id，希望输出到哪个HTML元素里，就写哪个元素的id
+  player.addParam("autoplay","1");
+  player.addParam("wmode","transparent");
+  //player.addParam("pic","http://img1.gtimg.com/ent/pics/hv1/75/182/1238/80547435.jpg");
+  player.write("video");//将视频输出到id=video的div中
+}
+```
+8. 设置当前视频的id并进行播放
+```
+setVideo(data.message[0].vvideid);
+```
+
+### 打包之前的设置
+1. 这个手机端播放视频我们也是需要通过gulp进行管理
+2. 也需要通过一个app.js文件使用express托管
+```
+'use strict';
+const express=require('express');
+let app=express();
+app.listen(8888,()=>{
+  console.log('video site started 8888');
+});
+
+```
+3. 我们需要将我们这个App进行托管，都是我们的静态资源
+4. 将当前目录变成我们express的静态资源目录即可
+```
+app.use(express.static(__dirname));
+```
+
+### 移动站点和移动APP
+1. 移动站点：
+- 一般是类似于m.jd.com m.taobao.com m.itcast.cn
+- 在浏览器中打开，那么这种网站一定要在服务器上进行托管允许(目前使用的是express)
+2. 移动APP：
+- 这种就是类似于原生的APP，直接打包安装到手机上，将来手机就会自动利用HBuilder的基座打开一个内置的浏览器，自动找到名称为index.html的文件运行即可
 
 ## 利用HBuilder这个开发工具的云服务将移动站点打包成apk
+1. 在HBuilder中我们提供了一个云，可以发行为原生的安装包，一定要选中我们要发行的安装包
+2. 进行选择的打包，以及选择是否去配置我们需要额模块与权限
+
+### 打包注意点
+1. 要将我们的url地址改为外网地址，不是我们测试的本地
+
+### 解决移动端搜索框用不了的办法
+1. 将后面的span标签去掉
+2. 以及span里面的data-input-clear="1" data-input-search="1"一起去掉
+
+## 学习微信的开发
+1. 注册号微信公众平台以后，利用它的后台直接发布消息(不需要开发经验)
+2. 学习微信的API的使用
+- 订阅后自动发送消息到手机上
+- 当用户发送一条消息后我们的服务器主动回复
+
+### 苹果投影
+1. 先装iTunes
+2. 再装iTools
+3. 在iTools中选择我们苹果录屏大师，选择操作系统
+4. 第一次使用选择连接助手，要使用屏幕投影助手扫描二维码
+5. 要在手机的商店中下载屏幕投影助手
+6. 扫描后会自动在手机上装一个iTools
+7. 如果有连接上的话就是AirPlay
+8. 选择iTools并将镜像打开
+
+### 订阅后自动发送消息到手机上
+- 在我们的微信公众平台上有一个自动回复选项，在里面输入我们文字。
+- 关注了微信公众号后，自动收到一条欢迎消息
+- 我们微信订阅号订阅成功后会建立起一条通道
+- 微信服务器就会通过自动回复中的被添加自动回复功能主动给你发送一条消息
+- 当我们的用户发送一条消息的时候是发送给微信服务器的
+- 微信服务器要回复一条消息，微信公众平台中我们需要添加关键词自动回复
+- 用户输入规则名可以获取到我们关键词自动回复的消息
+
+### 企业自己的系统服务器
+1. 开启一个web服务器用来接收请求
+2. 当用户发送信息的时候不是通过微信发送
+3. 根据系统自己的逻辑做一些响应回去
+4. 我们的服务器响应给微信服务器
+5. 微信再响应回用户界面
+6. 在微信公众平台上有很多接口
+
+## mongoDB的使用(nodejs如何操作它)
+
