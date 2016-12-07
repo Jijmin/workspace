@@ -592,5 +592,3 @@ res.end(resXML);
 ### 整个项目的展示图
 ![架构设计](../images/03 - 系统回顾和微信开发的架构设计.png)
 
-## mongoDB的使用(nodejs如何操作它)
-
