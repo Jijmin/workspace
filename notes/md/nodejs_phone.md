@@ -422,5 +422,201 @@ app.use(express.static(__dirname));
 5. 微信再响应回用户界面
 6. 在微信公众平台上有很多接口
 
+### 自己开发一个服务器来接管我们的微信公众号
+1. 关闭微信服务器本身的消息响应功能
+2. 还可以在【开发】里面的【基本配置】成为开发者
+3. 【服务器配置】【启用】就会自动关闭
+4. 当所有的资料补全以后进入到【基本配置菜单】【修改配置】
+5. 【URL】代表我们自己开发的微信服务器的对外的地址
+- 作用：用来给微信服务器想我们自己开发的web服务器上进行消息推送的
+- 这个地址要想填写成功，必须要写代码验证
+6. 在开发过程中使用明文，方便调试
+7. 用express搭建我们的服务器
+8. 要将我们的服务器变成一个URL，借助于ittun
+9. 在【startup-api接口.bat】中更改我们的域名以及端口号
+10. 定一个与微信服务器进行交互的路由规则
+11. 将申请服务器以及搭建服务写好之后回到基本配置中的URL中
+12. 将我们自己开发好的url填充到微信公众平台的修改配置中的url以后，微信服务器就会自动发送一条请求到达我们的服务器
+13. 这时由于我们的服务器没有给微信服务器响应一个它要求的合法的字符串，所以微信服务器此时认为我们填写的url是一个不合法的url拒绝通信
+14. 我们应该在我们自己的服务器中按照微信的通讯标准来进行响应合法的字符串
+15. signature这个参数的值就是echostr+timestamp+nonce进行加密以后的密文
+16. echostr微信服务器向我们自己开发的服务器推送的一个随机字符串，将来只需要在我们的服务器中将这个字符串原样响应给微信服务器即可这时微信服务器只要获取到这个字符串与它内部生产的比较如果相等就表示我们的服务器url验证成功
+```
+let echostr=req.query.echostr;
+res.end(echostr);
+```
+17. 我们在做验证的时候，只需要在我们的服务器中将微信服务器发送过来的echostr的值响应即可完成
+18. 在我们的服务器中只需要将echostr返回即可，因为在url的参数形式是？要使用query获取
+19. 验证成功以后，将来微信服务器和我们的服务器的通讯地址就是url
+
+### 开发功能
+1. 关注/取消关注事件
+```
+<xml>
+<ToUserName><![CDATA[toUser]]></ToUserName>//开发者微信号
+<FromUserName><![CDATA[FromUser]]></FromUserName>//发送方帐号（一个OpenID）
+<CreateTime>123456789</CreateTime>//消息创建时间 （整型）
+<MsgType><![CDATA[event]]></MsgType>//消息类型，event
+<Event><![CDATA[subscribe]]></Event>//事件类型，subscribe(订阅)、unsubscribe(取消订阅)
+</xml>
+```
+- 解析xml(使用xml2.js)
+- 分析里面的MsType是什么类型event
+- event节点中一定是subscribe
+- 才表示用户是关注这个公众号的事件
+
+### 关注/取消关注事件开发
+1. 当用户关注了公众号的时候，我们要响应回去
+2. 解析微信推送给我们的服务器的xml数据(post)
+3. 获取到post提交过来的请求报文体中的数据
+```
+req.on('data',(requestBody)=>{
+  console.log(requestBody.toString());
+});
+```
+4. 将所有发送过来的xml数据转换成JS对象
+```
+var parseString = require('xml2js').parseString;
+var xml = "<root>Hello xml2js!</root>"
+parseString(xml, function (err, result) {
+    console.dir(result);
+});
+```
+5. 再根据JS对象中的相关的字段去判断到底是关注还是其他
+```
+req.on('data',(requestBody)=>{
+    var parseString = require('xml2js').parseString;
+    var xml = requestBody.toString();
+    parseString(xml, function (err, result) {
+      if(result.xml.MsgType[0]=='event'&&result.xml.Event[0]=='subscribe'){
+        //关注事件
+        console.log('enter...');
+      }else{
+
+      }
+    });
+  });
+```
+6. 将欢迎消息响应回微信服务器
+```
+let resXML=`<xml>
+            <ToUserName><![CDATA[${result.xml.FromUserName}]]></ToUserName>
+            <FromUserName><![CDATA[${result.xml.ToUserName}]]></FromUserName>
+            <CreateTime>12345678</CreateTime>
+            <MsgType><![CDATA[text]]></MsgType>
+            <Content><![CDATA[你好，欢迎关注！！]]></Content>
+            </xml>`;
+res.end(resXML);
+```
+7. 对微信客户端和服务器端进行通讯处理
+
+###
+
+### xml2.js使用
+1. 将xml转换成对象
+```
+var parseString = require('xml2js').parseString;
+var xml = "<root>Hello xml2js!</root>"
+parseString(xml, function (err, result) {
+    console.dir(result);
+});
+```
+
+### 被动回复用户消息
+#### 用户关注回发送消息
+```
+<xml>
+<ToUserName><![CDATA[toUser]]></ToUserName>//接收方帐号（收到的OpenID）
+<FromUserName><![CDATA[fromUser]]></FromUserName>//开发者微信号
+<CreateTime>12345678</CreateTime>//消息创建时间 （整型）
+<MsgType><![CDATA[text]]></MsgType>//text
+<Content><![CDATA[你好!!!]]></Content>//回复的消息内容（换行：在content中能够换行，微信客户端就支持换行显示）
+</xml>
+```
+#### 用户随便输入回复消息
+```
+if(result.xml.MsgType[0]=='text'){
+  let resXML=`<xml>
+              <ToUserName><![CDATA[${result.xml.FromUserName}]]></ToUserName>
+              <FromUserName><![CDATA[${result.xml.ToUserName}]]></FromUserName>
+              <CreateTime>12345678</CreateTime>
+              <MsgType><![CDATA[text]]></MsgType>
+              <Content><![CDATA[你好]]></Content>
+              </xml>`;
+  res.end(resXML);
+}
+```
+#### 回复图文消息
+```
+let resXML=`<xml>
+            <ToUserName><![CDATA[${result.xml.FromUserName}]]></ToUserName>
+            <FromUserName><![CDATA[${result.xml.ToUserName}]]></FromUserName>
+            <CreateTime>12345678</CreateTime>
+            <MsgType><![CDATA[news]]></MsgType>
+            <ArticleCount>1</ArticleCount>
+            <Articles>
+            <item>
+            <Title><![CDATA[欢迎学习nodejs课程]]></Title> 
+            <Description><![CDATA[这次学习的是NodeJS项目]]></Description>
+            <PicUrl><![CDATA[https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png]]></PicUrl>
+            <Url><![CDATA[https://www.baidu.com/]]></Url>
+            </item>
+            </Articles>
+            </xml>`;
+res.end(resXML);
+```
+
+### 这个流程的使用
+1. 使用ittun创建3个外网连接的地址
+- api接口
+- 移动站点MUI
+- 运营者服务器
+2. 因为我们的app是托管到MUI上面，我们要将移动站点MUI的ittun配置成mui的端口
+3. 开启我们的移动站点MUI的服务器，就是配置文件
+4. 要取到数据需要我们的APIService启动，就是运行app.js
+5. 通过MUI将我们的手机端页面打开就可以看到数据
+6. 将我们映射到外网的app地址填入我们对微信关注公众号处理中
+7. 在我们的运营者服务器处理关注事件中调用我们对xml文件的处理函数
+8. 开启我们的运营者服务器
+9. 我们需要对关键字进行开发
+10. 获取到搜索的关键字
+11. 去表中查询数据
+12. 包装成图文消息的xml格式
+13. 响应回去
+14. 需要对我们响应回去的xml进行连接数据库的操作
+15. 获取到数据的总条数
+16. 遍历我们定义好的item格式生成一个长串的xml格式
+17. 将我们的后台数据填充到xml文件中
+18. 最后响应回去
+
+### 整个项目的展示图
+![架构设计](../images/03 - 系统回顾和微信开发的架构设计.png)
+
+### SVN使用
+1. 公司局域网中有一台计算机是我们的SVN服务端
+2. 我们工作的电脑是客户端，我们需要向服务端进行提交
+3. 服务端VisualSVN_219
+4. 安装VisualSVN-Server-2.1.9.msi
+5. 安装的时候要注意将我们的【Server Port】改成现在使用的本地的端口
+6. 其他的都是默认选择
+7. 安装客户端，先装安装包再安装中文包
+8. 安装好客户端后鼠标右键可以看到一个小乌龟
+9. 安装好后再设置里面有个语言，选择我们的中文
+10. 设置完成之后会跳转到我们的服务器的管理工具中
+11. 我们在管理工具中建立我们的仓库
+12. 这个仓库中设置访问权限，创建一个用户，设置用户名和密码
+13. 这个用户还是游离的，没有任何的操作权限
+14. 在我们新建的仓库中右键有一个【Properties】【add】，将用户选中，再设置权限
+15. 将我们的文件添加到仓库中去
+16. 产品经理第一次向一个空的仓库提交文件，称之为导入import
+17. 在对应的文件夹右键打开小乌龟【导入】
+18. 里面的url地址就是我们刚刚新建的仓库的地址
+19. 添加提交说明，提交，需要用户名和密码
+20. 我们提交后有一个版本信息的，在仓库上右键【Copy URL to Clipboard】，在浏览器的url栏中访问
+21. 第一次提交完成之后要通知所有的组员将项目down下来做开发
+22. 所有的组员要将文件拉下来做开发，称之为迁出(检出、check out)
+23. 我们再次创建一个用户，一样也要添加到项目中去，授予权限
+24. 
+
 ## mongoDB的使用(nodejs如何操作它)
 
