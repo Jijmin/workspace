@@ -14,5 +14,11 @@
 4. 控制不同平台的兼容性的config.js
 5. route，global，config三个模块都需要在app模块中引用
 
+### 其他功能模块划分
+1. controller.js//业务逻辑
+2. service.js//数据请求访问，和服务器进行操作
+3. router.js//子功能路由js，控制我们的按页面跳转
+4. template.html//模板
+
 ### 改APP名字
 config.xml中更改name
