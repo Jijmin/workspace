@@ -284,7 +284,7 @@ app.get('/test/:id',(req,res)=>{
 - 作用：帮助我们对文字或者图片进行样式的控制
 - ueditor for nodejs这个富文本编辑器
     + 如何将富文本编辑器在html页面中自动生成(这个偶成和nodejs是没有关系的，全靠它提供的js文件就可以实现)
-        * 引入三个 js脚本，将js拷贝到静态资源文件夹下
+        * 引入三个js脚本，将js拷贝到静态资源文件夹下
         * 将id='editor'的script标签放到需要生成富文本编辑器的地方
         * UE.getEditor('editor');来生成富文本编辑器
     + 上传图片(一定要借助于nodejs的web服务器的某个路由规则才行)

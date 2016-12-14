@@ -367,3 +367,178 @@ ReactDOM.render(
     document.getElementById('myDiv')
 );
 ```
+
+### 组件的注意事项 
+尽量不要在componentWillUpdate和componentDidUpdate中使用this.state，会造成死循环
+
+### 在生命周期中移除组件
+```
+class Main extends React.Component{
+    constructor(){
+        super();
+    }
+    render(){
+        return <h1>Mian</h1>
+    }
+}
+ReactDOM.render(
+    <Main></Main>,
+    document.getElementById('myDiv')
+)
+```
+
+### 遍历
+```
+import React from 'react'
+import ReactDOM from 'react-dom'
+class  MyP extends  React.Component{
+    constructor(){
+        super();
+    }
+    render(){
+        return <p>{this.props.name}</p>
+    }
+}
+class Main extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            arr:[1,2,3,4,5]
+        }
+    }
+    render(){
+        return (
+            <ul>
+                {
+                    this.state.arr.map((item)=>{
+                        return (
+                            <li><MyP name={item}></MyP></li>
+                        )
+                    })
+                }
+            </ul>
+        )
+    }
+}
+ReactDOM.render(
+    <Main></Main>,
+    document.getElementById('myDiv')
+);
+```
+
+### 路由
+1. 下载路由包
+2. 引用react路由包
+3. 在ReactRouter.Route中配置不同的路由
+```
+ReactDOM.render(
+    <ReactRouter.Router history={ReactRouter.hashHistory}>
+        <ReactRouter.Route path="/" component={Mian}></ReactRouter.Route>
+        <ReactRouter.Route path="/Book/(:id)" component={Book}></ReactRouter.Route>
+    </ReactRouter.Router>
+)
+```
+4. 要拿取数据通过{this.props.params.id}
+
+### 抽象路由
+1. 在主路由中放置
+2. 通过不同的url标签进行切换
+3. react有一个类似a标签的标签Link标签
+```
+<ReactRouter.Link to="/Book/100">100</ReactRouter.Link>
+```
+4. 要显示需要使用一个类似于view，匹配好规则以后显示
+```
+{this.props.children}
+```
+5. 下面的路由配置就是我们的嵌套路由
+6. activeClassName表示该路由一旦匹配后就显示对应的样式
+```
+<ReactRouter.Link to="/Book/100" activeClassName>100</ReactRouter.Link>
+```
+7. 综合来看
+```
+import React from 'react'
+import {render} from 'react-dom'
+import {Router,Route,Link,hashHistory} from 'react-router'
+class Main extends React.Component{
+    constructor(){
+        super();
+    }
+    render(){
+        return <h1>Main</h1>
+    }
+}
+class Book extends React.Component{
+    constructor(){
+        super();
+    }
+    render(){
+        return <h1>Book</h1>
+    }
+}
+render((
+  <Router history={hashHistory}>
+    <Route  path="/" component={Main}></Route>
+    <Route  path="/Book(/:id)" component={Book}></Route>
+  </Router>),
+  document.getElementById('myDiv')
+)
+```
+
+
+### TODO
+1. 在官网上下载我们TODO的模板
+2. 将我们依赖包下载下来
+3. 将我们的组件分离出来，去掉注释，标签闭合，class转换为className
+4. 要将我们的组件渲染到我们的页面上，模板上是一个class属性，我们需要取class的第一个
+5. 创建一个配置文件webpack.config.js
+6. 将当前的TODOList循环遍历出来，对显示的文本进行绑定，对勾选按钮使用checked绑定状态，不能使用defaultValue绑定，这样只能绑定一次
+7. 我们需要在TODOList数据中加上ID，是一个随机数去掉前面两位
+8. 添加一个随机数函数，在我们需要生成ID的地方调用
+9. 给每个li加一个key的id值
+10. 添加一个form通过onSubmit事件提交数据的方法addTodo
+11. 在表单中通过ref传入一个值来拿到数据
+12. 提交事件的时候要改变this的值
+13. 增加todo的时候通过refs获取到我们提交过来的数据
+14. 在我们添加数据回车时会跳到新的界面
+15. 我们通过e.preventDefault阻止默认事件
+16. 将我们获取到的值进行重新渲染到下面的列表中
+17. 要使用concat将新添加的数据和以前的todoList数据拼接
+18. 做容错处理
+19. 判断当前newTodo长度大于0，看看输入是否为空
+20. 添加后将输入栏添加清空说
+21. 删除的时候在按钮上添加一个点击事件
+22. 因为要对this进行处理，我们要要对this进行绑定，还需要知道我们我们当前需要删除的项，传入参数todo即可
+23. 在删除函数中我们需要先拿到当前todo
+24. 通过下标进行删除
+25. 再将整个todoList进行重新渲染
+26. 在复选框添加一个onChange事件，将复选款的状态取反，重新渲染
+27. 通过第三方插件classnames改变我们的样式的数据
+28. 下载classnames包，并引入classnames包
+29. 将样式改变className={classNames({completed:todo.completetd})}
+30. 对数据进行修改
+31. 双击label修改todo，如果修改的要修改的todo和当前todo相等就是我们需要修改状态的todo
+32. 双击的时候进行重新渲染
+33. 失去焦点的时候保存当前的todo修改的值，设置一个ref的id值，通过todo将id传出去
+34. 在失去焦点的时候获取当前refs中的id值，将对应的数据进行保存
+35. 修改editingTodo将其不指向当前Todo，置为空对象
+36. 将获取到的修改的值保存在todo的text中
+37. 子组件中不需要引用react-dom，将子组件写好之后放到我们的主组件中
+38. 子组件要在外部进行访问，需要export ddefault出去
+39. 在我们的主组件中引入我们的子组件
+40. 将我们的尾部用标签显示
+41. 通过props将外部属性进行传递
+42. 通过过滤器进行统计已完成的数量
+43. 将长度绑定到我们需要传回给子组件的属性上
+44. 清除已经完成的就将过滤掉为false的，进行重新渲染
+45. 全选的时候将下面的统计的数量进行取反来判断是否全选
+46. 调用rander的时候可以对数量进行统计
+47. 但是注意的是我们不能在判断之后使用setState，而是使用state
+48. 在渲染的时候将数量进行取反
+49. 根据toggleAll的取反的值更新到todoList的每一个todo的completed上
+50. 通过map将每一个数给抛出，重新渲染
+51. defaultChecked只能使用一次，应该使用checked
+52. 下载react的路由模块，并引用路由模块
+53. 根据锚点值取出数据，过滤的时候进行switch
+54. 定义一个空数组将三种情况保存起来，进行渲染
