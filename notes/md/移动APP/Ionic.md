@@ -123,6 +123,9 @@ app.config(function($urlRouterProvider) {
 ### home
 1. 创建页面结构route.js、controller.js、service.js、template.html
 2. 主页面有一个tab切换效果，使用我们的抽象路由书写
+3. 做好抽象路由，添加样式
+4. 主页要引用我们写好的CSS样式
+5. 
 
 ### tab页面
 1. tab选项卡做成抽象路由模式
@@ -183,3 +186,4 @@ app.config(function($stateProvider){
 ```
 6. 将抽象主路由注入到主路由中
 7. 主页对抽象路由进行引用
+8. 在添加抽象路由的时候不需要添加url

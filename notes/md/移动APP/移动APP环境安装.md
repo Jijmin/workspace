@@ -54,6 +54,7 @@ $ ionic start myApp tabs
 $ cd myApp
 $ ionic platform add android//会多一个platform文件夹，安卓所依赖的东西
 $ ionic build android//将www目录打包到platform
+$ ionic run android
 //很可能丢文件，删掉重来
 ```
 - 【adb devices】出现了版本号就可以【$ ionic run android】可以直接安装在手机上
