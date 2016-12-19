@@ -248,3 +248,205 @@ commonjs规定的好的功能在nodejs实现了，这样的一些模块我们叫
 - 安装vsCode，并且通过vscode打开要调试的文件所在的文件夹
 - 点击F5,选择nodejs的打开方式，这时vsCode会打开一个lanuch.json，修改其中"program"属性，改为"${workspaceRoot}/文件名.js"
 - 可以查看文件的五个全局对象以及添加监控文件中变量的值 
+
+## es6语法
+### 开启严格模式
+```
+”use strict”
+```
+1. 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;
+2. 消除代码运行的一些不安全之处，保证代码运行的安全；
+3. 提高编译器效率，增加运行速度；
+4. 为未来新版本的Javascript做好铺垫。
+
+### 定义变量：let （类似于var）
+1. var声明的变量会有变量提升
+2. var没有块级作用域
+3. var可以多次重复定义一个变量
+
+### 定义常量const
+1. 值不能再改变
+2. 常量具有块级作用域
+3. 不要在块中申明常量
+4. 没有变量提升，先声明后使用
+5. 不可以申明同名的常量
+6. 一定要赋初始值，否则报错
+7. 如果声明的是对象，对象的地址不能改变，但是可以改变其内部的属性。
+
+### 字符串的扩展
+1. `Includes()`返回布尔值，表示是否找到了参数字符串
+2. `startsWidth(str[,num])`返回布尔值，表示是否在原字符串开头找到了参数字符串
+3. `endsWith(str[,num])`返回布尔值，表示参数字符串是否在原字符串的结束位置
+4. `repeat(num)`将调用的字符串重复num次
+
+### 模板语法：`模板字符串`
+结构：\`模板内容${code}\`
+
+### 箭头函数:()=>{}
+```
+arr.each(function(m,n){
+    console.log(n)
+});
+```
+```
+arr.each((m,n)=>{console.log(n);});
+```
+```
+arr.each((m,n)=>console.log(n));
+```
+```
+arr.each(n=>console.log(n))
+```
+1. 箭头函数没有自己的this，函数体内部写的this,会顺着作用域去找最近真实存在的this
+2. 箭头函数内部的this是定义时所在的对象，而不是使用时所在的对象，并且不会改变。
+3. 箭头函数不能作为构造函数，会报错
+4. 箭头函数中不存在arguments，箭头函数中的argument指向的是外层的arguments
+
+## 文件读写核心模块File System(fs)
+### Buffer对象
+#### 使用buffer对象
+1. 创建`var buffer = new Buffer(5);`
+2. 清空`buffer.fill(0);`
+3. 写入内容`buffer.write(‘我ABCD’);`
+4. 将数组转为字符串`buffer.toString();`
+5. 按需分配数组的长度`let buf = new Buffer(“你好世界”);`
+
+#### Buffer常用操作
+1. `new Buffer(参数)`:创建一个Buffer对象
+2. `buf.wirte()`：写入内容
+3. `buf.length`：获取buffer对象中数据的长度
+4. `buf.slice`:用来获取指定位置的指定长度数据
+5. `buf.toString(编码)`：将二进制数据转换成指定编码的字符串，默认是utf8
+6. `Buffer.isEncoding(编码)`：判断当前编码格式在nodejs中是否支持。
+
+### 操作目录
+#### 创建文件夹：mkdir
+1. 引用核心模块`const fs = require(“fs”);`
+2. 创建文件夹`fs.mkdir(“./abc/a”,function(err){})`
+
+#### 删除文件夹：rmdir
+1. rmdir只能移除空文件夹
+
+#### 判断一个目录是否存在
+`fs.exists(path,(exists)=>{})`
+
+### 操作文件
+1. 写文件`fs.writeFile(file,data,[,opionts],(err)=>{})`
+2. 追加文件`fs.appendFile(path,data,(err)=>{});`
+3. 读文件`fs.readFile(path,(err,content)=>{})`
+4. 文件重命名（改）`fs.rename(path,path,(err)=>{});`
+5. 删除文件（删）`fs.unlink(path,(err)=>{})`
+6. 监控文件`fs.watchFile(fileName,{persistent:true,intrval:50},(curr,prev){})`
+- curr：表示的是最新文件的版本
+- prev：表示的是上一次修改之前的版本
+- callback: 文件发生修改时候会执行回调函数。
+- 如果要读取文件以后做其它的事情一定不能把代码放到回调函数之外，不然还没有读完操作就完成了
+
+### 实现大文件的读写
+1. 创建读文件流`let rs =  creatReadStream(path,)`
+2. 创建写文件流`let ws =  creatWriteStream(target)`
+3. 添加数据读取监听：`rs.on(“data”,(chunk)=>{ws.write(chunk)})`
+4. 添加事件结束事件`rs.on(‘end’,()=>{})`
+5. 还可以通过`创建读流`，`创建写流`，`调用读流的管道方法写入写流:rs.pipe(ws);`
+
+## nodejs的特点
+### 非阻塞I/O模型(异步)
+当使用nodejs去读取文件时，如果文件过大，就让程序分两个部分来工作：一个部分继续去读取文件，另一个部分继续执行下面的程序。这种方式来读取文件的话，既不会影响文件的读取，又不会影响下面代码的执行。这种文件读取文件的方式我们叫做非阻塞式I/O模型。
+### 事件驱动
+通过nodejs的fs核心模块给文件设置一个监听事件，文件就处于补监听状态了，一旦文件被修改了，就会触发监听设置的回调函数，当回调函数处理完毕后返回监听状态，并处于等待事件状态。所以将来只要设置一个事件，只要满足事件的触发的条件，事件就会执行，执行以后再回到等待事件状态。
+### 事件驱动的应用
+由于淘宝服务器在任何时候都可能被用户访问到，为了防止请求被遗漏，淘宝的服务器需要开启一个监听事件，而这个监听事件应该满足的状态是：如果有请求过来，服务器就处理请求，如果没有请求过来，服务器就等待请求。而这个特点就事件驱动的核心思想。今天我们来利用nodejs的事件驱动写一个服务器。
+
+## net核心模块
+### 使用net创建一个服务器的步骤
+1. 创建一个服务器对象
+- `var socketServer = net.createServer();//建议第一种`
+- `var socketServer = new net.server();`
+2. 给socketServer开启一个监听事件
+- `socketServer .on(“connection”,(socket)=>{});`
+3. 监听端口
+- `socketServer.listen(端口号，ip地址);`
+
+### 使用net创建一个客户端的步骤
+1. 设置要连接的服务器的ip和端口号
+```
+let ip = ‘ip地址’;
+Let port = 8080;
+```
+2. 连接服务器
+```
+Let socket = net.createConnection(prot,ip,()=>{});
+```
+3. 接收来自服务器的数据
+```
+Socket.on(“data”,(content)=>{})
+```
+
+## HTTP协议
+### 创建服务器的方法
+1. 创建服务器`let server = http.createServer();`
+2. 监听浏览器的请求`Server.on(“request”,(req,res)=>{});`
+3. 监听`Server.lisen(port,ip,()=>{});`
+
+### req对象
+- headers属性:获取浏览器请求报文头中的值
+- rawHeaders:获取浏览器请求报文头中的值
+- httpVersion：当前请求的http协议的版本,通常都是 HTTP1.1
+- method: 获取当前浏览器请求的方法（get,post）
+- url：浏览器请求服务器的页面路径 
+
+### res对象
+- setHeader()：设置响应报文头：
+- 如果没有设置文件头的类型将来数据响应到浏览器为乱码，需要设置属性：’Content-Type’,’text/html;charset=utf8’;。（告诉浏览器，这段返回的数据的类型为文本类型,并且数据字符集为utf-8）
+    + Content-Type常用属性为：
+        * text/plain:文件类型
+        * application/x-png：png图片
+- end():结束响应的标志
+    + 服务器只有执行了end方法浏览器才认为服务器响应完毕，所以将来服务器做完操作以后一定要加上end方法。
+- write():可以向浏览器中输入一些内容。
+
+### 异常捕获
+```
+try {
+    逻辑代码
+    //当逻辑代码运行异常时，会自动触发catch(err)
+    //err:指当前错误的一异常信息
+}catch(err){
+    处理异常代码可以为：
+    1）console.log(err);//将错误信息打印出来，方便程序查看（不会响应程序正常运行）
+    2）Throw err;//报错，类似于没有处理（程序无法正常运行）
+    3）为空：什么都不写出现错误后不会响应程序运行
+    4）一般情况下会将错误信息写入一个文本文件中（我们把这个文件叫做日志文件。）
+}
+```
+
+## 小型服务器思路
+1）创建好服务器
+2）设置好模块，给模板中填入占位
+3）浏览器请求服务器时，判断当前请求的是否是index.html页面
+4）读取index.html模板中的内容
+5）读取data.json中的数据，拼接成li标签，替换 模板中的$(lis}占位符
+6）将完整 的html字符串响应回去
+
+## 模板
+1）安装
+2）创建一个模板文件
+3）将要设置的占位以模板文件的语法加入到模板文件中
+```
+{{#each(array)}}
+<li> {{this}}  </li>
+{{/each}}
+```
+4）使用模板：
+```
+xtpl.renderFile('./tmp.html',{array:[1,2,3,4,5]},(err,content)=>{
+    //content其实就是结合tmp.html和{array:[1,2,3,4,5]}生成以后的    最终html代码
+    // console.log(content);
+    res.setHeader('Content-Type','text/html;charset=utf8');
+    res.end(content);
+});
+```
+
+## express框架的使用
+
+
