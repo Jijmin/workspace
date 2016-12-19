@@ -99,3 +99,253 @@ var app4=new Vue({
 ```
 在控制台里，输入 `app4.todos.push({ text: 'New item' })`。你会发现列表中多了一栏新内容
 
+### 处理用户输入
+为了让用户和你的应用进行互动，我们可以用 v-on 指令绑定一个监听事件用于调用我们 Vue 实例中定义的方法
+```
+<div id="app">
+    <p>{{message}}</p>
+    <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+```
+```
+var app=new Vue({
+    el:'#app',
+    data:{
+        message:'Hello VueJS'
+    },
+    methods:{
+        reverseMessage:function(){
+            this.message=this.message.split('').reverse().join('')
+        }
+    }
+});
+```
+在 reverseMessage 方法中，我们在没有接触 DOM 的情况下更新了应用的状态 - 所有的 DOM 操作都由 Vue 来处理，你写的代码只需要关注基本逻辑。
+Vue 也提供了 v-model 指令，它使得在表单输入和应用状态中做双向数据绑定变得非常轻巧。
+```
+<p>{{message}}</p>
+<input type="text" v-model="message">
+```
+
+### 用组件构建（应用）
+- 组件系统是 Vue.js 另一个重要概念，因为它提供了一种抽象，让我们可以用独立可复用的小组件来构建大型应用。
+- 在 Vue 里，一个组件实质上是一个拥有预定义选项的一个 Vue 实例
+```
+Vue.component('todo-item', {
+  template: '<li>This is a todo</li>'
+})
+```
+现在你可以另一个组件模板中写入它
+```
+<ol>
+  <todo-item></todo-item>
+</ol>
+```
+但是这样会为每个 todo 渲染同样的文本，这看起来并不是很酷。我们应该将数据从父作用域传到子组件。让我们来修改一下组件的定义，使得它能够接受一个 prop 字段：
+```
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+```
+现在，我们可以使用 v-bind 指令将 todo 传到每一个重复的组件中
+```
+<div id="app-7">
+  <ol>
+    <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+  </ol>
+</div>
+```
+```
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+var app7 = new Vue({
+  el: '#app-7',
+  data: {
+    groceryList: [
+      { text: 'Vegetables' },
+      { text: 'Cheese' },
+      { text: 'Whatever else humans are supposed to eat' }
+    ]
+  }
+})
+```
+子元素通过 props 接口实现了与父亲元素很好的解耦
+
+## Vue实例
+### 构造器
+每个 Vue.js 应用都是通过构造函数 Vue 创建一个 Vue 的根实例 启动的：
+```
+var vm = new Vue({
+  // 选项
+})
+```
+- 在实例化 Vue 时，需要传入一个选项对象，它可以包含数据、模板、挂载元素、方法、生命周期钩子等选项。
+- 可以扩展 Vue 构造器，从而用预定义选项创建可复用的组件构造器。
+```
+var MyComponent=Vue.extend({
+    //扩展选项
+});
+// 所有的 `MyComponent` 实例都将以预定义的扩展选项被创建
+var myComponentInstance = new MyComponent()
+```
+- 尽管可以命令式地创建扩展实例，不过在多数情况下建议将组件构造器注册为一个自定义元素，然后声明式地用在模板中。
+
+### 属性与方法
+每个 Vue 实例都会代理其 data 对象里所有的属性：
+```
+var data = { a: 1 }
+var vm = new Vue({
+  data: data
+})
+vm.a === data.a // -> true
+// 设置属性也会影响到原始数据
+vm.a = 2
+data.a // -> 2
+// ... 反之亦然
+data.a = 3
+vm.a // -> 3
+```
+- 注意只有这些被代理的属性是响应的。如果在实例创建之后添加新的属性到实例上，它不会触发视图更新。
+- 除了 data 属性， Vue 实例暴露了一些有用的实例属性与方法。这些属性与方法都有前缀 $，以便与代理的 data 属性区分。
+```
+var data = { a: 1 }
+var vm = new Vue({
+  el: '#example',
+  data: data
+})
+vm.$data === data // -> true
+vm.$el === document.getElementById('example') // -> true
+// $watch 是一个实例方法
+vm.$watch('a', function (newVal, oldVal) {
+  // 这个回调将在 `vm.a`  改变后调用
+})
+```
+> 注意，不要在实例属性或者回调函数中（如 vm.$watch('a', newVal => this.myMethod())）使用箭头函数。因为箭头函数绑定父上下文，所以 this 不会像预想的一样是 Vue 实例，而是 this.myMethod 未被定义。
+
+### 实例生命周期
+每个 Vue 实例在被创建之前都要经过一系列的初始化过程。例如，实例需要配置数据观测(data observer)、编译模版、挂载实例到 DOM ，然后在数据变化时更新 DOM 。在这个过程中，实例也会调用一些 生命周期钩子 ，这就给我们提供了执行自定义逻辑的机会。例如，created 这个钩子在实例被创建之后被调用：
+```
+var vm = new Vue({
+  data: {
+    a: 1
+  },
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log('a is: ' + this.a)
+  }
+})
+```
+也有一些其它的钩子，在实例生命周期的不同阶段调用，如 mounted、 updated 、destroyed 。钩子的 this 指向调用它的 Vue 实例。一些用户可能会问 Vue.js 是否有“控制器”的概念？答案是，没有。组件的自定义逻辑可以分布在这些钩子中。
+
+### 生命周期图示
+![Vue](../../images/vue_lifecycle.png)
+
+## 模板语法
+1. Vue.js 使用了基于 HTML 的模版语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。所有 Vue.js 的模板都是合法的 HTML ，所以能被遵循规范的浏览器和 HTML 解析器解析。
+2. 在底层的实现上， Vue 将模板编译成虚拟 DOM 渲染函数。结合响应系统，在应用状态改变时， Vue 能够智能地计算出重新渲染组件的最小代价并应用到 DOM 操作上。
+3. 如果你熟悉虚拟 DOM 并且偏爱 JavaScript 的原始力量，你也可以不用模板，直接写渲染（render）函数，使用可选的 JSX 语法。
+
+### 插值
+1. 文本
+```
+<span>Message: {{ msg }}</span>
+```
+```
+//能执行一次性地插值，当数据改变时，插值处的内容不会更新
+<span v-once>This will never change: {{ msg }}</span>
+```
+2. 纯HTML
+```
+<div v-html="rawHtml"></div>
+```
+被插入的内容都会被当做 HTML —— 数据绑定会被忽略。注意，你不能使用 v-html 来复合局部模板，因为 Vue 不是基于字符串的模板引擎。组件更适合担任 UI 重用与复合的基本单元。
+> 你的站点上动态渲染的任意 HTML 可能会非常危险，因为它很容易导致 XSS 攻击。请只对可信内容使用 HTML 插值，绝不要对用户提供的内容插值。
+3. 属性
+```
+<div v-bind:id="dynamicId"></div>
+```
+这对布尔值的属性也有效 —— 如果条件被求值为 false 的话该属性会被移除：
+```
+<button v-bind:disabled="someDynamicCondition">Button</button>
+```
+4. 使用JavaScript表达式
+```
+{{ number + 1 }}
+{{ ok ? 'YES' : 'NO' }}
+{{ message.split('').reverse().join('') }}
+<div v-bind:id="'list-' + id"></div>
+```
+这些表达式会在所属 Vue 实例的数据作用域下作为 JavaScript 被解析。有个限制就是，每个绑定都只能包含单个表达式，所以下面的例子都不会生效。
+```
+<!-- 这是语句，不是表达式 -->
+{{ var a = 1 }}
+<!-- 流控制也不会生效，请使用三元表达式 -->
+{{ if (ok) { return message } }}
+```
+> 模板表达式都被放在沙盒中，只能访问全局变量的一个白名单，如 Math 和 Date 。你不应该在模板表达式中试图访问用户定义的全局变量。
+
+### 指令
+1. 参数
+一些指令能接受一个“参数”，在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性：
+```
+<a v-bind:href="url"></a>
+//在这里 href 是参数，告知 v-bind 指令将该元素的 href 属性与表达式 url 的值绑定。
+```
+另一个例子是 v-on 指令，它用于监听 DOM 事件：
+```
+<a v-on:click="doSomething">
+```
+2. 修饰符
+修饰符（Modifiers）是以半角句号 . 指明的特殊后缀，用于指出一个指定应该以特殊方式绑定。例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
+```
+<form v-on:submit.prevent="onSubmit"></form>
+```
+
+### 过滤器
+Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。过滤器应该被添加在 mustache 插值的尾部，由“管道符”指示：
+```
+{{ message | capitalize }}
+<div v-bind:id="rawId | formatId"></div>
+```
+> Vue 2.x 中，过滤器只能在 mustache 绑定和 v-bind 表达式（从 2.1.0 开始支持）中使用，因为过滤器设计目的就是用于文本转换。为了在其他指令中实现更复杂的数据变换，你应该使用计算属性。
+
+过滤器函数总接受表达式的值作为第一个参数
+```
+new Vue({
+  // ...
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  }
+})
+```
+过滤器可以串联：
+```
+{{ message | filterA | filterB }}
+```
+过滤器是 JavaScript 函数，因此可以接受参数：
+```
+{{ message | filterA('arg1', arg2) }}
+```
+
+### 缩写
+1. v-bind缩写
+```
+<!-- 完整语法 -->
+<a v-bind:href="url"></a>
+<!-- 缩写 -->
+<a :href="url"></a>
+```
+2. v-on缩写
+```
+<!-- 完整语法 -->
+<a v-on:click="doSomething"></a>
+<!-- 缩写 -->
+<a @click="doSomething"></a>
+```
