@@ -349,3 +349,120 @@ new Vue({
 <!-- 缩写 -->
 <a @click="doSomething"></a>
 ```
+
+## 计算属性
+### 计算属性
+```
+<div id="example">
+  {{message.split('').reverse().join('')}}
+</div>
+```
+在实现反向显示 message 之前，你应该确认它。这个问题在你不止一次反向显示 message 的时候变得更加糟糕。
+这就是为什么任何复杂逻辑，你都应当使用计算属性。
+
+#### 基础例子
+```
+<div id="example">
+  <p>Original message: "{{ message }}"</p>
+  <p>Computed reversed message: "{{ reversedMessage }}"</p>
+</div>
+```
+```
+var vm=new Vue({
+  el:'#example',
+  data:{
+    message:'Hello'
+  },
+  computed:{
+    reversedMessage:function(){
+      return this.message.split('').reverse().join('');
+    }
+  }
+});
+//你可以打开浏览器的控制台，修改 vm 。 vm.reversedMessage 的值始终取决于 vm.message 的值。
+```
+你可以像绑定普通属性一样在模板中绑定计算属性。 Vue 知道 vm.reversedMessage 依赖于 vm.message ，因此当 vm.message 发生改变时，依赖于 vm.reversedMessage 的绑定也会更新。而且最妙的是我们是声明式地创建这种依赖关系：计算属性的 getter 是干净无副作用的，因此也是易于测试和理解的。
+
+#### 计算缓存VS Methods
+1. 我们可以通过添加函数一样实现倒置的功能
+2. 计算属性是基于它的依赖缓存
+3. 计算属性只有在它的相关依赖发生改变时才会重新取值
+4. 只要 message 没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+5. 这也同样意味着如下计算属性将不会更新，因为 Date.now() 不是响应式依赖
+```
+computed: {
+  now: function () {
+    return Date.now()
+  }
+}
+```
+6. 相比而言，每当重新渲染的时候，method 调用总会执行函数。
+7. 我们为什么需要缓存？
+- 假设我们有一个重要的计算属性 A 
+- 这个计算属性需要一个巨大的数组遍历和做大量的计算
+- 然后我们可能有其他的计算属性依赖于 A 
+- 如果没有缓存，我们将不可避免的多次执行 A 的 getter 
+- 如果你不希望有缓存，请用 method 替代
+
+#### 计算属性VS Watched Property
+1. Vue.js 提供了一个方法 $watch ，它用于观察 Vue 实例上的数据变动。
+2. 当一些数据需要根据其它数据变化时， $watch很好使用
+3. 通常更好的办法是使用计算属性而不是一个命令式的 $watch 回调。
+```
+<div id="demo">{{ fullName }}</div>
+```
+```
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar',
+    fullName: 'Foo Bar'
+  },
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  }
+})
+```
+```
+var vm=new Vue({
+    el:'#demo',
+    data:{
+      firstName:'Foo',
+      lastName:'Bar',
+    },
+    computed:{
+      fullName:function(){
+        return this.firstName+' '+this.lastName
+      }
+    }
+  });
+```
+
+#### 计算setter
+```
+computed: {
+  fullName: {
+    // getter
+    get: function () {
+      return this.firstName + ' ' + this.lastName
+    },
+    // setter
+    set: function (newValue) {
+      var names = newValue.split(' ')
+      this.firstName = names[0]
+      this.lastName = names[names.length - 1]
+    }
+  }
+}
+```
+现在在运行 vm.fullName = 'John Doe' 时， setter 会被调用， vm.firstName 和 vm.lastName 也会被对应更新。
+
+### 观察 Watchers
+虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的 watcher 。这是为什么 Vue 提供一个更通用的方法通过 watch 选项，来响应数据的变化。当你想要在数据变化响应时，执行异步操作或开销较大的操作，这是很有用的。
+

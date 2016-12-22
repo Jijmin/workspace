@@ -448,5 +448,3 @@ xtpl.renderFile('./tmp.html',{array:[1,2,3,4,5]},(err,content)=>{
 ```
 
 ## express框架的使用
-
-
