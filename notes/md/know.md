@@ -1,9 +1,0 @@
-### SeaJS
-### CMD
-### Requirejs
-### AMD
-### shell
-### NodeJS
-### nvm
-### npm
-### commonJS
