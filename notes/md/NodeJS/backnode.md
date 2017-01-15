@@ -98,6 +98,35 @@ module.exports=connection;
 46. 我们需要处理teacher数据表的数据，引入数据库的配置文件
 47. 在我们提交的时候要添加一个.gitignore文件忽略我们的node_modules目录
 48. 在开发功能的时候要开发一个分支
+49. 在添加讲师的时候，点击添加我们需要将数据提交过去
+50. 首先将添加变成一个input的按钮，设置一个submit事件
+51. 在base.xtpl下放置一个script的空位
+52. 在我们的添加教师的模板中写我们的script，可以对数据进行提交
+53. 通过add.js模块；哎添加一个讲师模块，引入我们设置好路径的jquery
+54. 在添加讲师模块中使用我们定义好的模块
+55. 提交的时候需要考虑将数据提交到哪个接口？以何种方式提交(get/post)，以及传递哪些参数
+56. 后台将表单的字段name和数据库的对应起来
+57. 前台通过ajax来获取数据
+58. 提交事件中的this对象就是取回来的数据，我们要对其进行序列化serialize()
+59. 要取消默认的提交行为，return false;
+60. 提交的url接口我们要在后台设置好路由
+61. serialize会忽略没有name属性的表单
+62. 在路由中我们需要对ajax取回来的数据进行操作，在node中是用body-parser中间件
+63. 在我们进行表单提交的时候，是用application/x-www-form-urlencoded进行提交的
+64. 我们需要对其进行解析`app.use(bodyParser.urlencoded({ extended: false }))`
+65. 如果是json字符串我们需要使用`app.use(bodyParser.json())`
+66. 取回数据后我们需要调用model进行数据存储
+67. 在模型中我们暴露出去方法，控制器中引入，就可以调用我们暴露出来的方法
+68. 将通过body-parser取回来的数据放入到我们的数据库中去
+```
+exports.add=function(body){
+    db.query('INSERT INTO `teacher` SET ?',body,function(err,rows){
+        //...
+    });
+}
+```
+69. 提交中要对我们提交的数据的value值进行默认的设置，符合我们建立的数据库中的表
+70. 当我们操作成功后用回调函数传回
 
 ### 模块化
 1. 实现模块化需要解依赖的关系
@@ -139,6 +168,7 @@ if(typeof define === 'function' && define.cmd){
 1. `npm install express --save`
 2. `npm install xtpl xtemplate --save` 
 3. `npm install mysql --save` 
+4. `npm install body-parser --save`
 
 ### 前后端分离
 1. V+C前端 M=后端
